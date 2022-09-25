@@ -1,0 +1,5 @@
+test/fixtures
+public
+node_modules
+*/index.js
+*/App.test.js

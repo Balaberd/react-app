@@ -1,0 +1,141 @@
+.button {
+  height: 2rem;
+
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  background: none;
+
+  white-space: nowrap;
+
+  font-size: 13px;
+  color: var(--main-elements-color);
+
+  fill: var(--main-elements-color);
+  stroke: var(--main-elements-color);
+}
+
+.button_icon-only {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.button_filled {
+  background-color: var(--main-elements-color);
+  color: var(--background-color);
+  fill: var(--background-color);
+  stroke: var(--background-color);
+}
+
+.button_disabled {
+  color: var(--font-color);
+  fill: var(--font-color);
+  stroke: var(--font-color);
+}
+
+.button_short {
+  height: 1.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.button_short.button_icon-only {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.button_full-width {
+  width: 100%;
+}
+
+/* .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    gap: 0.5rem;
+    height: 2rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: var(--main-elements-color);
+    color: var(--background-color);
+
+    white-space: nowrap;
+}
+
+.button__icon {
+    width: 1rem;
+    height: 1rem;
+    width: 1rem;
+    height: 1rem;
+    fill: var(--background-color);
+    stroke: var(--background-color);
+}
+
+
+.button_not-text {
+    padding: 0.5rem;
+}
+
+
+.buttons_not-filled {
+    background: none;
+    color: var(--main-elements-color);
+}
+
+.buttons_not-filled .button__icon {
+    fill: var(--main-elements-color);
+    stroke: var(--main-elements-color);
+}
+
+.buttons_disabled {
+    background: none;
+    color: var(--button-text-color_disabled);
+}
+
+.buttons_disabled.button_not-text {
+    position: relative;
+}
+
+.buttons_disabled.button_not-text .button__text {
+    display: inline;
+    top: 0.5rem;
+    left: 2.5rem;
+    position: absolute;
+    opacity: 0;
+}
+
+.buttons_disabled .button__icon {
+    fill: var(--button-text-color_disabled);
+}
+
+.buttons_short {
+    width: 5.75rem;
+    height: 1.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    gap: 0.25rem;
+}
+
+.buttons_short.button_not-icon {
+    width: 4.5rem;
+}
+
+.buttons_short.button_not-text {
+    padding: 0.25rem;
+    width: 1.5rem;
+}
+
+.button_full-width {
+    width: 100%;
+}
+
+.header .button {
+    width: 8.75rem;
+} */

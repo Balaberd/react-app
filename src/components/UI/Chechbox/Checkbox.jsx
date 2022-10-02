@@ -6,7 +6,11 @@ function Checkbox({ checked }) {
   return (
     <div className={styles["custom-checkbox"]}>
       <label>
-        <input className={styles["custom-checkbox__checkbox"]} type="checkbox" checked={checked} />
+        <input
+          className={styles["custom-checkbox__checkbox"]}
+          type="checkbox"
+          checked={checked}
+        />
         <svg
           className={styles["custom-checkbox__icon"]}
           viewBox="0 0 16 16"

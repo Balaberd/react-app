@@ -54,3 +54,11 @@
 .filter__additional.filter__additional_active {
   display: flex;
 }
+
+.dropdown-wrapper {
+  position: absolute;
+}
+
+.dropdown-wrapper_unvisible {
+  display: none;
+}

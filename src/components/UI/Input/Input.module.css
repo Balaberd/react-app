@@ -40,72 +40,17 @@
   background: none;
   font-size: 13px;
   font-family: "Ubuntu", sans-serif;
+  color: var(--font-color);
 }
 
 .custom-input__input::placeholder {
   color: var(--dim-elements-color);
 }
 
-.custom-input__button {
-  width: 1.5rem;
-  height: 1.5rem;
-  min-width: 1.5rem;
-  min-height: 1.5rem;
-  padding: 0.25rem;
-  border-radius: 0;
-  box-sizing: border-box;
-  border: none;
-  background: none;
-  display: none;
-}
-
-.custom-input__icon {
-  stroke: var(--main-elements-color);
-  fill: var(--main-elements-color);
-}
-
-.custom-input__icon_x {
-  stroke: var(--dim-elements-color);
-}
-
-.custom-input__icon_locked {
-  fill: var(--font-color);
-}
-
 .custom-input_incorrect .custom-input__wrapper {
   border: 1px solid var(--warning-color);
 }
 
-.custom-input_incorrect .custom-input__button_reset {
-  display: inline;
-}
-
 .custom-input_disabled .custom-input__wrapper {
   background-color: var(--dim-elements-color);
-}
-
-.custom-input_disabled .custom-input__button_locked {
-  display: inline;
-}
-
-.custom-input__input:disabled {
-  color: var(--font-color);
-}
-
-.custom-input__button_search {
-  display: inline;
-}
-
-.custom-input__button-icon {
-  stroke: var(--main-elements-color);
-}
-
-.custom-input_filled .custom-input__button_reset {
-  display: inline;
-}
-
-.custom-input__icon {
-  width: 1rem;
-  min-width: 1rem;
-  margin-right: 0.25rem;
 }

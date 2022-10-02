@@ -6,6 +6,8 @@ import { ReactComponent as IconMoon } from "./moon.svg";
 import { ReactComponent as IconRefresh } from "./refresh.svg";
 import { ReactComponent as IconXLarge } from "./x-large.svg";
 import { ReactComponent as IconXMedium } from "./x-medium.svg";
+import { ReactComponent as IconArrow } from "./v_arrow.svg";
+import { ReactComponent as IconSearch } from "./search.svg";
 
 function Icon({ type }) {
   switch (type) {
@@ -23,6 +25,10 @@ function Icon({ type }) {
       return <IconXLarge width="1rem" />;
     case "x-medium":
       return <IconXMedium width="1rem" />;
+    case "arrow":
+      return <IconArrow width="1rem" />;
+    case "search":
+      return <IconSearch width="1rem" />;
     default:
       return null;
   }

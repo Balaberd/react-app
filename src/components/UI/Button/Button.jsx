@@ -1,24 +1,24 @@
 import React from "react";
+import cn from "classnames";
 import Icon from "../Icon/Icon";
 import styles from "./Button.module.css";
 
-function Button({ classes, text, icon, callback, type }) {
-  let buttonStyles = styles.button;
-  if (!text) buttonStyles += ` ${styles["button_icon-only"]}`;
-  if (classes)
-    classes.split(" ").forEach((el) => {
-      buttonStyles += ` ${styles[el]}`;
-    });
-
+function Button({ propsStyles, text, icon, callback, type }) {
   return (
     <button
-      className={buttonStyles}
-      disabled={buttonStyles.includes("button_disabled")}
+      className={cn(styles.button, {
+        [styles.button_disabled]: propsStyles.disabled,
+        [styles.button_short]: propsStyles.short,
+        [styles.button_filled]: propsStyles.filled,
+        [styles["button_full-width"]]: propsStyles.fullWidth,
+        [styles["button_icon-only"]]: text === undefined,
+      })}
+      disabled={propsStyles.disabled}
       onClick={(e) => callback(e)}
       type={type}
     >
       <Icon type={icon} />
-      {text ?? text}
+      {text}
     </button>
   );
 }

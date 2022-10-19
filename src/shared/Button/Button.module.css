@@ -1,0 +1,58 @@
+.button {
+  height: 2rem;
+
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  background: none;
+
+  white-space: nowrap;
+
+  font-size: 13px;
+  color: var(--main-elements-color);
+
+  fill: var(--main-elements-color);
+  stroke: var(--main-elements-color);
+
+  transition: all ease-in 0.25s;
+}
+
+.button_iconOnly {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.button_filled {
+  background-color: var(--main-elements-color);
+  color: var(--background-color);
+  fill: var(--background-color);
+  stroke: var(--background-color);
+}
+
+.button_disabled {
+  color: var(--font-color);
+  fill: var(--font-color);
+  stroke: var(--font-color);
+}
+
+.button_short {
+  height: 1.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.button_short.button_iconOnly {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.button_fullWidth {
+  width: 100%;
+}

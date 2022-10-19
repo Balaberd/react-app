@@ -1,0 +1,23 @@
+.table__body {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.table__body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.table__body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.table__body::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.34);
+}

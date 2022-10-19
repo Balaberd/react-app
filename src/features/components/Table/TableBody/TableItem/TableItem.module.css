@@ -1,0 +1,59 @@
+.rowWrapper {
+  width: 100%;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid;
+  border-color: var(--additional-filter-background);
+}
+
+.rowWrapper_checked {
+  background-color: var(--additional-filter-background);
+}
+
+.checkboxBlock {
+  min-width: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.numberBlock {
+  min-width: 6.25rem;
+  padding-left: 0.5rem;
+}
+
+.dateBlock {
+  min-width: 10.5rem;
+  padding-left: 0.5rem;
+}
+
+.statusBlock {
+  min-width: 10.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusBlock_canceledStatus {
+  fill-opacity: 0.5;
+}
+
+.statusBlock_doneStatus {
+  color: #0fb864;
+  fill-opacity: 0.5;
+}
+
+.positionBlock {
+  min-width: 5.5rem;
+  padding-left: 0.5rem;
+}
+
+.sumBlock {
+  min-width: 7.5rem;
+  padding-left: 0.5rem;
+}
+
+.nameBlock {
+  min-width: 47.75rem;
+  padding-left: 0.5rem;
+}

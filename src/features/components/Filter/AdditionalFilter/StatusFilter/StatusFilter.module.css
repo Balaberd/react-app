@@ -1,0 +1,24 @@
+.filter__orderStatus {
+  width: 12rem;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.dropdownWrapper {
+  position: absolute;
+  top: 3.75rem;
+  right: 0;
+}
+
+.dropdownWrapper_unvisible {
+  display: none;
+}
+
+.flipped {
+  transform: rotateX(180deg);
+}
+
+.button {
+  opacity: 0.5;
+}

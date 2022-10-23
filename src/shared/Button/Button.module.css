@@ -1,0 +1,58 @@
+._ {
+  height: 2rem;
+
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  background: none;
+
+  white-space: nowrap;
+
+  font-size: 13px;
+  color: var(--main-elements-color);
+
+  fill: var(--main-elements-color);
+  stroke: var(--main-elements-color);
+
+  transition: all ease-in 0.25s;
+}
+
+.iconOnly {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.filled {
+  background-color: var(--main-elements-color);
+  color: var(--background-color);
+  fill: var(--background-color);
+  stroke: var(--background-color);
+}
+
+.disabled {
+  color: var(--font-color);
+  fill: var(--font-color);
+  stroke: var(--font-color);
+}
+
+.short {
+  height: 1.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  gap: 0.25rem;
+}
+
+.short.iconOnly {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.fullWidth {
+  width: 100%;
+}

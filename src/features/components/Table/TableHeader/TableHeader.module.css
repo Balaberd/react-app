@@ -1,0 +1,60 @@
+._ {
+  min-height: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--main-elements-color);
+  padding: 0 0.5rem 0 0.5rem;
+  display: flex;
+  align-items: center;
+  color: var(--additional-filter-background);
+}
+
+.checkboxCell {
+  min-width: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.numberCell {
+  min-width: 6.25rem;
+  padding-left: 0.5rem;
+}
+
+.dateCell {
+  min-width: 10.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.statusCell {
+  min-width: 10.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.positionCell {
+  min-width: 5.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sumCell {
+  min-width: 7.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nameCell {
+  min-width: 47.75rem;
+  padding-left: 0.5rem;
+}
+
+.arrowIcon {
+  fill: var(--background-color);
+}

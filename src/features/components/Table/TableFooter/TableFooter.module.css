@@ -1,0 +1,29 @@
+._ {
+  min-height: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--additional-filter-background);
+  padding: 0 0.5rem 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nodeChecked {
+  color: var(--main-elements-color);
+}
+
+.binButton {
+  background-color: #f53152;
+  color: #ffffff;
+  stroke: #ffffff;
+}
+
+.deleteBlockWrapper {
+  position: relative;
+}
+
+.dropdownWrapper {
+  position: absolute;
+  left: 0;
+  bottom: 1.75rem;
+}

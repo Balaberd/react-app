@@ -21,7 +21,7 @@
   fill: var(--main-elements-color);
   stroke: var(--main-elements-color);
 
-  transition: all ease-in 0.25s;
+  transition: all ease-in-out 0.25s;
 }
 
 .iconOnly {
@@ -29,11 +29,17 @@
   padding-right: 0.5rem;
 }
 
-.filled {
+.primary {
   background-color: var(--main-elements-color);
   color: var(--background-color);
   fill: var(--background-color);
   stroke: var(--background-color);
+}
+
+.warning {
+  background-color: var(--warning-color);
+  color: #ffffff;
+  stroke: #ffffff;
 }
 
 .disabled {

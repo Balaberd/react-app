@@ -55,3 +55,9 @@
 .disabled .wrapper {
   background-color: var(--dim-elements-color);
 }
+
+.icon {
+  min-width: 1rem;
+  min-height: 1rem;
+  margin-right: 0.25rem;
+}

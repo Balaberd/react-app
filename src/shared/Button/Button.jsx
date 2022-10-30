@@ -5,16 +5,17 @@ import styles from "./Button.module.css";
 
 function Button({
   isFullWidth,
-  isShort,
-  isFilled,
+  height,
+  theme,
   icon,
   children,
   className,
   ...props
 }) {
   const componentStyles = cn(styles._, className, {
-    [styles.short]: isShort,
-    [styles.filled]: isFilled,
+    [styles.short]: height === "short",
+    [styles.primary]: theme === "primary",
+    [styles.warning]: theme === "warning",
     [styles.fullWidth]: isFullWidth,
     [styles.iconOnly]: !children,
     [styles.disabled]: props?.disabled,

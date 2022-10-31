@@ -7,20 +7,14 @@ import themeSwitcherStyles from "./ThemeSwitcher/ThemeSwitcher.module.css";
 import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher";
 
 function Header() {
-  const [dropdownVisibility, setDropdownVisibility] = useState(false);
   const [currentTheme, setCurrentTheme] = useState("light");
 
-  const handleToggleVisibility = () =>
-    setDropdownVisibility(!dropdownVisibility);
   useEffect(() => {
     switchThemeColors(currentTheme);
   }, [currentTheme]);
 
   const toggleElement = (
-    <Button
-      icon={currentTheme === "light" ? "sun" : "moon"}
-      onClick={handleToggleVisibility}
-    >
+    <Button icon={currentTheme === "light" ? "sun" : "moon"}>
       {currentTheme === "light" ? "Светлая тема" : "Темная тема"}
     </Button>
   );

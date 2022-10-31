@@ -3,7 +3,7 @@ import { FiltersContext } from "features/OrdersList/OrdersList";
 import { React, useContext } from "react";
 import StatusFilter from "./StatusFilter/StatusFilter";
 
-const NAMES_OF_STATUS = {
+const NAMES_OF_STATUSES = {
   new: "Новый",
   calculating: "Расчет",
   confirm: "Подтвержден",
@@ -18,7 +18,7 @@ function StatusFilterContainer() {
 
   let checkedValues = Object.keys(choosedStatuses)
     .filter((el) => choosedStatuses[el])
-    .map((el) => NAMES_OF_STATUS[el]);
+    .map((el) => NAMES_OF_STATUSES[el]);
   if (
     checkedValues.length === 0 ||
     checkedValues.length === Object.keys(choosedStatuses).length

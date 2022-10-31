@@ -10,7 +10,7 @@ function ThemeSwitcher({ currentTheme, changeTheme }) {
       Выберите тему
       <Button
         theme={currentTheme === "light" && "primary"}
-        height="short"
+        heightSize="short"
         isFullWidth
         icon="sun"
         onClick={changeToLigthThemeHandler}
@@ -19,7 +19,7 @@ function ThemeSwitcher({ currentTheme, changeTheme }) {
       </Button>
       <Button
         theme={currentTheme === "dark" && "primary"}
-        height="short"
+        heightSize="short"
         isFullWidth
         icon="moon"
         onClick={changeToDarkThemeHandler}

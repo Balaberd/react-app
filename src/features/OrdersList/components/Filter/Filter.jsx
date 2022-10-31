@@ -9,21 +9,19 @@ import SumFilter from "./AdditionalFilter/SumFilter/SumFilter";
 import StatusFilterContainer from "./AdditionalFilter/StatusFilterContainer/StatusFilterContainer";
 
 function Filter({ className }) {
-  const [additionalFilterVisibility, setAdditionalFilterVisibility] =
-    useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleToggleAdditionalFilter = () =>
-    setAdditionalFilterVisibility(!additionalFilterVisibility);
+  const handleToggleAdditionalFilter = () => setIsVisible(!isVisible);
 
   const componentStyles = cn(styles._, className);
 
   return (
     <div className={componentStyles}>
       <MainFilter
-        additionalFilterVisibility={additionalFilterVisibility}
+        additionalFilterVisibility={isVisible}
         handleToggleAdditionalFilter={handleToggleAdditionalFilter}
       />
-      {additionalFilterVisibility && (
+      {isVisible && (
         <AdditionalFilter>
           <DateFilter />
           <StatusFilterContainer />

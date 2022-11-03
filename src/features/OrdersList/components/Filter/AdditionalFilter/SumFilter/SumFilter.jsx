@@ -18,7 +18,7 @@ function SumFilter() {
       <Input
         value={filterSumFromValue}
         onChange={handleChangeFilterSumFromValue}
-        resetValue={handleResetFilterSumFromValue}
+        onReset={handleResetFilterSumFromValue}
         label="Сумма заказа"
         placeholder="&#8381;"
         prefix="от"
@@ -26,7 +26,7 @@ function SumFilter() {
       <Input
         value={filterSumToValue}
         onChange={handleChangeFilterSumToValue}
-        resetValue={handleResetFilterSumToValue}
+        onReset={handleResetFilterSumToValue}
         placeholder="&#8381;"
         prefix="до"
       />

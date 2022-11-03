@@ -4,14 +4,16 @@ import styles from "./Dropdown.module.css";
 
 const mixHandlers = (handler1, handler2) => () => {
   handler1();
-  if (handler2) handler2();
+  if (handler2) {
+    handler2();
+  }
 };
 
 function Dropdown({
   trigger,
   children,
   childrenClassName,
-  triggerClassNameWithActivTrigger,
+  triggerClassNameWithActiveTrigger,
 }) {
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -22,7 +24,7 @@ function Dropdown({
   const mixedHandlers = mixHandlers(toggleDropdown, trigger.props.onClick);
   const TriggerElement = React.cloneElement(trigger, {
     onClick: mixedHandlers,
-    className: cn({ [triggerClassNameWithActivTrigger]: !isVisible }),
+    className: cn({ [triggerClassNameWithActiveTrigger]: !isVisible }),
   });
 
   return (

@@ -19,7 +19,7 @@ function DateFilter() {
       <Input
         value={filterDateFromValue}
         onChange={handleChangeFilterDateFromValue}
-        resetValue={handleResetFilterDateFromValue}
+        onReset={handleResetFilterDateFromValue}
         label="Дата оформления"
         placeholder="dd.mm.yyyy"
         prefix="c"
@@ -27,7 +27,7 @@ function DateFilter() {
       <Input
         value={filterDateToValue}
         onChange={handleChangeFilterDateToValue}
-        resetValue={handleResetFilterDateToValue}
+        onReset={handleResetFilterDateToValue}
         placeholder="dd.mm.yyyy"
         prefix="по"
       />

@@ -10,7 +10,7 @@ const noop = () => {};
 function Input({
   value = "",
   onChange = noop,
-  resetValue = noop,
+  onReset = noop,
   isIncorrect,
   disabled,
   label,
@@ -24,7 +24,7 @@ function Input({
     <Icon type="locked" className={styles.icon} />
   );
   const resetPostfix = value && (
-    <Button heightSize="short" icon="xMedium" onClick={resetValue} />
+    <Button heightSize="short" icon="xMedium" onClick={onReset} />
   );
 
   const componentStyles = cn(styles._, className, {

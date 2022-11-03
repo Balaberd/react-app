@@ -23,7 +23,7 @@ function MainFilter({
           <Input
             value={searchbarValue}
             onChange={handleChangeSearchbar}
-            resetValue={handleResetSearchbar}
+            onReset={handleResetSearchbar}
             placeholder="Номер заказа или ФИО"
             prefix={<Icon type="search" />}
           />

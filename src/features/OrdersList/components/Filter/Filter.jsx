@@ -6,7 +6,7 @@ import MainFilter from "./MainFilter/MainFilter";
 import AdditionalFilter from "./AdditionalFilter/AdditionalFilter";
 import DateFilter from "./AdditionalFilter/DateFilter/DateFilter";
 import SumFilter from "./AdditionalFilter/SumFilter/SumFilter";
-import StatusFilterContainer from "./AdditionalFilter/StatusFilterContainer/StatusFilterContainer";
+import StatusFilter from "./AdditionalFilter/StatusFilter/StatusFilter";
 
 function Filter({ className }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,7 +24,7 @@ function Filter({ className }) {
       {isVisible && (
         <AdditionalFilter>
           <DateFilter />
-          <StatusFilterContainer />
+          <StatusFilter />
           <SumFilter />
           <Button>Применить</Button>
         </AdditionalFilter>

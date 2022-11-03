@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import cn from "classnames";
 import Button from "shared/Button/Button";
 import styles from "./Filter.module.css";
 import MainFilter from "./MainFilter/MainFilter";
@@ -8,15 +7,13 @@ import DateFilter from "./AdditionalFilter/DateFilter/DateFilter";
 import SumFilter from "./AdditionalFilter/SumFilter/SumFilter";
 import StatusFilter from "./AdditionalFilter/StatusFilter/StatusFilter";
 
-function Filter({ className }) {
+function Filter() {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleToggleAdditionalFilter = () => setIsVisible(!isVisible);
 
-  const componentStyles = cn(styles._, className);
-
   return (
-    <div className={componentStyles}>
+    <div className={styles._}>
       <MainFilter
         additionalFilterVisibility={isVisible}
         handleToggleAdditionalFilter={handleToggleAdditionalFilter}

@@ -1,13 +1,23 @@
 body {
+  font-family: "Ubuntu", sans-serif;
+  color: var(--font-color);
+  background-color: var(--background-color);
+
+  --font-color: #000000;
+  --background-color: #ffffff;
+  --main-elements-color: #459df5;
+  --dim-elements-color: #bad8f5;
+  --warning-color: #f53152;
+  --additional-filter-background: #ebf0f5;
+
+  --active-sorter-color: rgba(0, 0, 0, 0.15);
+
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.body_darkTheme {
+  --font-color: #bcc4cc;
+  --background-color: #2b2d33;
+  --dim-elements-color: #454e52;
+  --additional-filter-background: #171b1f;
 }

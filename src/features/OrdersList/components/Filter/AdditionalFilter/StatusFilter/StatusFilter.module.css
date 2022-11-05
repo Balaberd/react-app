@@ -1,0 +1,11 @@
+._ {
+  width: 12rem;
+}
+
+.flipped {
+  transform: rotateX(180deg);
+}
+
+.button {
+  opacity: 0.5;
+}

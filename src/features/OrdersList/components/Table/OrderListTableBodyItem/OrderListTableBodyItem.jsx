@@ -4,9 +4,10 @@ import TableRow from "shared/Table/TableRow/TableRow";
 import TableCell from "shared/Table/TableCell/TableCell";
 import Checkbox from "shared/Chechbox/Checkbox";
 import StatusCell from "./StatusCell/StatusCell";
-import styles from "./OrderListRows.module.css";
+import rowStyles from "../RowMarkup.module.css";
+import styles from "./OrderListTableBodyItem.module.css";
 
-function OrderListTableBodyRow({
+function OrderListTableBodyItem({
   isChecked,
   onChangeCheck,
   index,
@@ -21,33 +22,33 @@ function OrderListTableBodyRow({
   const RUB_SYMBOL = <span>&#8381;</span>;
   return (
     <TableRow className={cn(styles.bodyRow, { [styles.checked]: isChecked })}>
-      <TableCell className={styles.checkbox}>
+      <TableCell className={rowStyles.checkbox}>
         <Checkbox checked={isChecked} onChange={onChangeCheck} />
       </TableCell>
 
-      <TableCell className={styles.index}>{index}</TableCell>
+      <TableCell className={rowStyles.index}>{index}</TableCell>
 
-      <TableCell className={styles.date}>
+      <TableCell className={rowStyles.date}>
         {`${date.toLocaleDateString()}, ${date
           .toLocaleTimeString()
           .slice(0, 5)}`}
       </TableCell>
 
-      <TableCell className={styles.status}>
+      <TableCell className={rowStyles.status}>
         <StatusCell status={status} />
       </TableCell>
 
-      <TableCell className={styles.numberOfPositions}>
+      <TableCell className={rowStyles.numberOfPositions}>
         {numberOfPositions}
       </TableCell>
 
-      <TableCell className={styles.sum}>
+      <TableCell className={rowStyles.sum}>
         {status === "canceled" ? "-" : sum.toLocaleString("ru")}
         &nbsp;
         {status !== "canceled" && RUB_SYMBOL}
       </TableCell>
 
-      <TableCell className={styles.name}>
+      <TableCell className={rowStyles.name}>
         {status === "canceled"
           ? lastName
           : `${lastName} ${firstName} ${secondName}`}
@@ -56,4 +57,4 @@ function OrderListTableBodyRow({
   );
 }
 
-export default OrderListTableBodyRow;
+export default OrderListTableBodyItem;

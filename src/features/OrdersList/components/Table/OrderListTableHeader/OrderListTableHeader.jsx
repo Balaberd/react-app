@@ -6,9 +6,10 @@ import Checkbox from "shared/Chechbox/Checkbox";
 import TableHeaderCell from "shared/Table/TableHeaderCell/TableHeaderCell";
 import Icon from "shared/Icon/Icon";
 import TableHeader from "shared/Table/TableHeader/TableHeader";
-import styles from "./OrderListRows.module.css";
+import styles from "./OrderListTableHeader.module.css";
+import rowStyles from "../RowMarkup.module.css";
 
-function OrderListTableHeaderRow({
+function OrderListTableHeader({
   activeSorter,
   setActiveSorter,
   isAllRowChecked,
@@ -22,56 +23,56 @@ function OrderListTableHeaderRow({
   return (
     <TableHeader>
       <TableRow>
-        <TableCell className={styles.checkbox}>
+        <TableCell className={rowStyles.checkbox}>
           <Checkbox checked={isAllRowChecked} onChange={checkAllRows} />
         </TableCell>
 
-        <TableCell className={styles.index}>#</TableCell>
+        <TableCell className={rowStyles.index}>#</TableCell>
 
         <TableHeaderCell
-          className={cn(styles.date, {
+          className={cn(rowStyles.date, {
             [styles.activeSorter]: activeSorter === "date",
           })}
           onClick={createHadnleChangeActiveSorter("date")}
         >
           Дата
-          <Icon type="arrow" className={styles.icon} />
+          <Icon type="arrow" className={rowStyles.icon} />
         </TableHeaderCell>
 
         <TableHeaderCell
-          className={cn(styles.status, {
+          className={cn(rowStyles.status, {
             [styles.activeSorter]: activeSorter === "status",
           })}
           onClick={createHadnleChangeActiveSorter("status")}
         >
           Статус
-          <Icon type="arrow" className={styles.icon} />
+          <Icon type="arrow" className={rowStyles.icon} />
         </TableHeaderCell>
 
         <TableHeaderCell
-          className={cn(styles.numberOfPositions, {
+          className={cn(rowStyles.numberOfPositions, {
             [styles.activeSorter]: activeSorter === "numberOfPositions",
           })}
           onClick={createHadnleChangeActiveSorter("numberOfPositions")}
         >
           Позиций
-          <Icon type="arrow" className={styles.icon} />
+          <Icon type="arrow" className={rowStyles.icon} />
         </TableHeaderCell>
 
         <TableHeaderCell
-          className={cn(styles.sum, {
-            [styles.activeSorter]: activeSorter === "sum",
+          className={cn(rowStyles.sum, {
+            [rowStyles.activeSorter]: activeSorter === "sum",
           })}
           onClick={createHadnleChangeActiveSorter("sum")}
         >
           Сумма
-          <Icon type="arrow" className={styles.icon} />
+          <Icon type="arrow" className={rowStyles.icon} />
         </TableHeaderCell>
 
-        <TableCell className={styles.name}>ФИО покупателя</TableCell>
+        <TableCell className={rowStyles.name}>ФИО покупателя</TableCell>
       </TableRow>
     </TableHeader>
   );
 }
 
-export default OrderListTableHeaderRow;
+export default OrderListTableHeader;

@@ -3,9 +3,9 @@ import Header from "features/OrdersList/components/Header/Header";
 import { React, createContext, useState } from "react";
 import Table from "shared/Table/Table";
 import TableBody from "shared/Table/TableBody/TableBody";
-import OrderListTableBodyRow from "./components/Table/OrderListTableBodyRow";
+import OrderListTableBodyItem from "./components/Table/OrderListTableBodyItem/OrderListTableBodyItem";
 import OrderListTableFooter from "./components/Table/OrderListTableFooter/OrderListTableFooter";
-import OrderListTableHeaderRow from "./components/Table/OrderListTableHeaderRow";
+import OrderListTableHeader from "./components/Table/OrderListTableHeader/OrderListTableHeader";
 import orders from "./lib/orders";
 import styles from "./OrdersList.module.css";
 
@@ -113,7 +113,7 @@ function OrdersList() {
         <Header />
         <Filter />
         <Table>
-          <OrderListTableHeaderRow
+          <OrderListTableHeader
             isAllRowChecked={orders.length === checkedRows.length}
             activeSorter={activeSorter}
             setActiveSorter={setActiveSorter}
@@ -121,7 +121,7 @@ function OrdersList() {
           />
           <TableBody>
             {orders.map((order) => (
-              <OrderListTableBodyRow
+              <OrderListTableBodyItem
                 key={order.id}
                 isChecked={checkedRows.includes(order.id)}
                 onChangeCheck={() => handleToggleRowCheck(order.id)}

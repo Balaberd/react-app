@@ -32,15 +32,3 @@
   width: 51.85%;
   padding-left: 0.5rem;
 }
-
-.bodyRow {
-  border-bottom: 1px solid var(--dim-elements-color);
-}
-
-.checked {
-  background-color: var(--additional-filter-background);
-}
-
-.activeSorter {
-  background-color: rgba(0, 0, 0, 0.15) !important;
-}

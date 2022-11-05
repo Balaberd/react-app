@@ -125,7 +125,6 @@ function OrdersList() {
                 key={order.id}
                 isChecked={checkedRows.includes(order.id)}
                 onChangeCheck={() => handleToggleRowCheck(order.id)}
-                handleChangeCheck
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...order}
               />

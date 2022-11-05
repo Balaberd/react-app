@@ -1,6 +1,12 @@
 import Filter from "features/OrdersList/components/Filter/Filter";
 import Header from "features/OrdersList/components/Header/Header";
 import { React, createContext, useState } from "react";
+import Table from "shared/Table/Table";
+import TableBody from "shared/Table/TableBody/TableBody";
+import OrderListTableBodyRow from "./components/Table/OrderListTableBodyRow";
+import OrderListTableFooter from "./components/Table/OrderListTableFooter/OrderListTableFooter";
+import OrderListTableHeaderRow from "./components/Table/OrderListTableHeaderRow";
+import orders from "./lib/orders";
 import styles from "./OrdersList.module.css";
 
 export const FiltersContext = createContext();
@@ -19,6 +25,8 @@ function OrdersList() {
     done: false,
     canceled: false,
   });
+  const [activeSorter, setActiveSorter] = useState("date");
+  const [checkedRows, setCheckedRows] = useState([]);
 
   const createHandleChange = (setter) => [
     ({ target: { value } }) => setter(value),
@@ -59,6 +67,22 @@ function OrdersList() {
     });
   };
 
+  const handleToggleRowCheck = (rowId) => {
+    if (checkedRows.includes(rowId)) {
+      setCheckedRows(checkedRows.filter((id) => rowId !== id));
+    } else {
+      const newCheckedRows = [...checkedRows];
+      newCheckedRows.push(rowId);
+      setCheckedRows(newCheckedRows);
+    }
+  };
+
+  const checkAllRows = () => {
+    if (orders.length === checkedRows.length) {
+      setCheckedRows([]);
+    } else setCheckedRows(orders.map((order) => order.id));
+  };
+
   return (
     <FiltersContext.Provider
       value={
@@ -88,6 +112,27 @@ function OrdersList() {
       <div className={styles.pageWrapper}>
         <Header />
         <Filter />
+        <Table>
+          <OrderListTableHeaderRow
+            isAllRowChecked={orders.length === checkedRows.length}
+            activeSorter={activeSorter}
+            setActiveSorter={setActiveSorter}
+            checkAllRows={checkAllRows}
+          />
+          <TableBody>
+            {orders.map((order) => (
+              <OrderListTableBodyRow
+                key={order.id}
+                isChecked={checkedRows.includes(order.id)}
+                onChangeCheck={() => handleToggleRowCheck(order.id)}
+                handleChangeCheck
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...order}
+              />
+            ))}
+          </TableBody>
+          <OrderListTableFooter choosedOrdersLength={checkedRows.length} />
+        </Table>
       </div>
     </FiltersContext.Provider>
   );

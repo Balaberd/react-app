@@ -5,10 +5,10 @@ function DeletionApprover() {
   return (
     <>
       Удалить т записей?
-      <Button heightSize="short" isFullWidth>
+      <Button size="short" isFullWidth>
         Удалить
       </Button>
-      <Button heightSize="short" theme="primary" isFullWidth>
+      <Button size="short" theme="primary" isFullWidth>
         Отмена
       </Button>
     </>

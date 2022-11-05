@@ -24,7 +24,7 @@ function Dropdown({
   const mixedHandlers = mixHandlers(toggleDropdown, trigger.props.onClick);
   const TriggerElement = React.cloneElement(trigger, {
     onClick: mixedHandlers,
-    className: cn({ [triggerClassNameWithActiveTrigger]: !isVisible }),
+    className: cn({ [triggerClassNameWithActiveTrigger]: isVisible }),
   });
 
   return (

@@ -24,7 +24,7 @@ function Input({
     <Icon type="locked" className={styles.icon} />
   );
   const resetPostfix = value && (
-    <Button heightSize="short" icon="xMedium" onClick={onReset} />
+    <Button size="short" icon="xMedium" onClick={onReset} />
   );
 
   const componentStyles = cn(styles._, className, {

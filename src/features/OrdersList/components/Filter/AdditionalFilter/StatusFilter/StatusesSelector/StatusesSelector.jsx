@@ -7,14 +7,14 @@ function StatusesSelector({ statusValues, handleChangeStatusValues }) {
   const statuses = Object.entries(statusValues);
   return (
     <>
-      {statuses.map((el) => (
+      {statuses.map(([statusName, statusValue]) => (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
-        <label className={styles.item} key={el[0]}>
+        <label className={styles.item} key={statusName}>
           <Checkbox
-            checked={el[1]}
-            onChange={() => handleChangeStatusValues(el[0])}
+            checked={statusValue}
+            onChange={() => handleChangeStatusValues(statusName)}
           />
-          {STATUSES_NAMES_TRANSLATION[el[0]]}
+          {STATUSES_NAMES_TRANSLATION[statusName]}
         </label>
       ))}
     </>

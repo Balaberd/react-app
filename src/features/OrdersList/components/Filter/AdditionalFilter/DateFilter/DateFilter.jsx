@@ -1,33 +1,46 @@
-// eslint-disable-next-line import/no-cycle
-import { FiltersContext } from "features/OrdersList/OrdersList";
-import { React, useContext } from "react";
+import {
+  changeDateFrom,
+  changeDateTo,
+  resetDateFrom,
+  resetDateTo,
+} from "features/OrdersList/model/filters/filterDateSlice";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Input from "shared/Input/Input";
 import styles from "./DateFilter.module.css";
 
 function DateFilter() {
-  const {
-    filterDateFromValue,
-    handleChangeFilterDateFromValue,
-    handleResetFilterDateFromValue,
-    filterDateToValue,
-    handleChangeFilterDateToValue,
-    handleResetFilterDateToValue,
-  } = useContext(FiltersContext);
+  const { dateFrom, dateTo } = useSelector((state) => state.filterDate);
+
+  const dispatch = useDispatch();
+
+  const handleChangeDateFrom = ({ target: { value } }) => {
+    dispatch(changeDateFrom(value));
+  };
+  const handleChangeDateTo = ({ target: { value } }) => {
+    dispatch(changeDateTo(value));
+  };
+  const handleResetDateFrom = () => {
+    dispatch(resetDateFrom());
+  };
+  const handleResetDateTo = () => {
+    dispatch(resetDateTo());
+  };
 
   return (
     <div className={styles._}>
       <Input
-        value={filterDateFromValue}
-        onChange={handleChangeFilterDateFromValue}
-        onReset={handleResetFilterDateFromValue}
+        value={dateFrom}
+        onChange={handleChangeDateFrom}
+        onReset={handleResetDateFrom}
         label="Дата оформления"
         placeholder="dd.mm.yyyy"
         prefix="c"
       />
       <Input
-        value={filterDateToValue}
-        onChange={handleChangeFilterDateToValue}
-        onReset={handleResetFilterDateToValue}
+        value={dateTo}
+        onChange={handleChangeDateTo}
+        onReset={handleResetDateTo}
         placeholder="dd.mm.yyyy"
         prefix="по"
       />

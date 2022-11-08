@@ -6,25 +6,52 @@ import Checkbox from "shared/Chechbox/Checkbox";
 import TableHeaderCell from "shared/Table/TableHeaderCell/TableHeaderCell";
 import Icon from "shared/Icon/Icon";
 import TableHeader from "shared/Table/TableHeader/TableHeader";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkAllOrders,
+  deleteAllCheck,
+} from "features/OrdersList/model/orders/ordersSlice";
+import {
+  changeSortDirection,
+  changeSorter,
+} from "features/OrdersList/model/sorter/sorterSlice";
 import styles from "./OrderListTableHeader.module.css";
 import rowStyles from "../RowMarkup.module.css";
 
-function OrderListTableHeader({
-  activeSorter,
-  setActiveSorter,
-  isAllRowChecked,
-  checkAllRows,
-}) {
+function OrderListTableHeader() {
+  const isAllOrdesChecked = useSelector(
+    (state) =>
+      state.orders.allOrders.length === state.orders.chechedOrders.length
+  );
+
+  const dispatch = useDispatch();
+
+  const handleToggleAllCheck = () => {
+    if (isAllOrdesChecked) {
+      dispatch(deleteAllCheck());
+    } else {
+      dispatch(checkAllOrders());
+    }
+  };
+
+  const { activeSorter, isIncreaseDirection } = useSelector(
+    (state) => state.sorter
+  );
+
   const createHadnleChangeActiveSorter = (sorterName) => () => {
-    // eslint-disable-next-line no-unused-expressions
-    activeSorter !== sorterName && setActiveSorter(sorterName);
+    if (activeSorter !== sorterName) {
+      dispatch(changeSorter(sorterName));
+    } else dispatch(changeSortDirection());
   };
 
   return (
     <TableHeader>
       <TableRow>
         <TableCell className={rowStyles.checkbox}>
-          <Checkbox checked={isAllRowChecked} onChange={checkAllRows} />
+          <Checkbox
+            checked={isAllOrdesChecked}
+            onChange={() => handleToggleAllCheck()}
+          />
         </TableCell>
 
         <TableCell className={rowStyles.index}>#</TableCell>
@@ -36,7 +63,12 @@ function OrderListTableHeader({
           onClick={createHadnleChangeActiveSorter("date")}
         >
           Дата
-          <Icon type="arrow" className={rowStyles.icon} />
+          <Icon
+            type="arrow"
+            className={cn(rowStyles.icon, {
+              [activeSorter === "date" && styles.flipped]: !isIncreaseDirection,
+            })}
+          />
         </TableHeaderCell>
 
         <TableHeaderCell
@@ -46,7 +78,13 @@ function OrderListTableHeader({
           onClick={createHadnleChangeActiveSorter("status")}
         >
           Статус
-          <Icon type="arrow" className={rowStyles.icon} />
+          <Icon
+            type="arrow"
+            className={cn(rowStyles.icon, {
+              [activeSorter === "status" && styles.flipped]:
+                !isIncreaseDirection,
+            })}
+          />
         </TableHeaderCell>
 
         <TableHeaderCell
@@ -56,17 +94,28 @@ function OrderListTableHeader({
           onClick={createHadnleChangeActiveSorter("numberOfPositions")}
         >
           Позиций
-          <Icon type="arrow" className={rowStyles.icon} />
+          <Icon
+            type="arrow"
+            className={cn(rowStyles.icon, {
+              [activeSorter === "numberOfPositions" && styles.flipped]:
+                !isIncreaseDirection,
+            })}
+          />
         </TableHeaderCell>
 
         <TableHeaderCell
           className={cn(rowStyles.sum, {
-            [rowStyles.activeSorter]: activeSorter === "sum",
+            [styles.activeSorter]: activeSorter === "sum",
           })}
           onClick={createHadnleChangeActiveSorter("sum")}
         >
           Сумма
-          <Icon type="arrow" className={rowStyles.icon} />
+          <Icon
+            type="arrow"
+            className={cn(rowStyles.icon, {
+              [activeSorter === "sum" && styles.flipped]: !isIncreaseDirection,
+            })}
+          />
         </TableHeaderCell>
 
         <TableCell className={rowStyles.name}>ФИО покупателя</TableCell>

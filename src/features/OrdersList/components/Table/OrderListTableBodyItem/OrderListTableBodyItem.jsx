@@ -7,6 +7,13 @@ import StatusCell from "./StatusCell/StatusCell";
 import rowStyles from "../RowMarkup.module.css";
 import styles from "./OrderListTableBodyItem.module.css";
 
+const getFormatDate = (date) => {
+  const objectDate = new Date(date);
+  return `${objectDate.toLocaleDateString()}, ${objectDate
+    .toLocaleTimeString()
+    .slice(0, 5)}`;
+};
+
 function OrderListTableBodyItem({
   isChecked,
   onChangeCheck,
@@ -28,11 +35,7 @@ function OrderListTableBodyItem({
 
       <TableCell className={rowStyles.index}>{index}</TableCell>
 
-      <TableCell className={rowStyles.date}>
-        {`${date.toLocaleDateString()}, ${date
-          .toLocaleTimeString()
-          .slice(0, 5)}`}
-      </TableCell>
+      <TableCell className={rowStyles.date}>{getFormatDate(date)}</TableCell>
 
       <TableCell className={rowStyles.status}>
         <StatusCell status={status} />

@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "shared/Button/Button";
 
-function DeletionApprover() {
+function DeletionApprover({ numberOfCheckedOrders }) {
   return (
     <>
-      Удалить т записей?
+      Удалить {numberOfCheckedOrders} записей?
       <Button size="short" isFullWidth>
         Удалить
       </Button>

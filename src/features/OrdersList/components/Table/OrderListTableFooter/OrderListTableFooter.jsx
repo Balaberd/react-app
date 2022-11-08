@@ -1,11 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import TableFooter from "shared/Table/TableFooter/TableFooter";
 import DeletionApprover from "./DeletionApprover/DeletionApprover";
 import styles from "./OrderListTableFooter.module.css";
 
-function OrderListTableFooter({ choosedOrdersLength }) {
+const getNumberOfCheckedOrders = (state) => state.orders.chechedOrders.length;
+
+function OrderListTableFooter() {
+  const numberOfCheckedOrders = useSelector(getNumberOfCheckedOrders);
+
   const toggleElement = (
     <Button icon="bin" theme="warning" size="short">
       Удалить
@@ -14,13 +19,13 @@ function OrderListTableFooter({ choosedOrdersLength }) {
 
   return (
     <TableFooter className={styles._}>
-      <span>Выбрано записей: {choosedOrdersLength}</span>
+      <span>Выбрано записей: {numberOfCheckedOrders}</span>
       <Button icon="pencil" theme="primary" size="short">
         Изменить статус
       </Button>
 
       <Dropdown trigger={toggleElement} childrenClassName={styles.dropdown}>
-        <DeletionApprover />
+        <DeletionApprover numberOfCheckedOrders={numberOfCheckedOrders} />
       </Dropdown>
     </TableFooter>
   );

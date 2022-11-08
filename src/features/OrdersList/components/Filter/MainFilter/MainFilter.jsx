@@ -1,21 +1,48 @@
-import { React, useContext } from "react";
+import React from "react";
 import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Icon from "shared/Icon/Icon";
-// eslint-disable-next-line import/no-cycle
-import { FiltersContext } from "features/OrdersList/OrdersList";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeSearchbar,
+  resetSearchbar,
+} from "features/OrdersList/model/filters/searchbarSlice";
+import { resetChoosedStatuses } from "features/OrdersList/model/filters/filterOfStatusesSlice";
+import {
+  resetDateFrom,
+  resetDateTo,
+} from "features/OrdersList/model/filters/filterDateSlice";
+import {
+  resetSumFrom,
+  resetSumTo,
+} from "features/OrdersList/model/filters/filterSumSlice";
 import styles from "./MainFilter.module.css";
 
 function MainFilter({
   additionalFilterVisibility,
   handleToggleAdditionalFilter,
 }) {
-  const {
-    searchbarValue,
-    handleChangeSearchbar,
-    handleResetSearchbar,
-    handleResetAllFilters,
-  } = useContext(FiltersContext);
+  const dispatch = useDispatch();
+
+  const searchbarValue = useSelector((state) => state.searchbar);
+
+  const handleChangeSearchbar = ({ target: { value } }) => {
+    dispatch(changeSearchbar(value));
+  };
+
+  const handleResetValue = () => {
+    dispatch(resetSearchbar());
+  };
+
+  const handleResetAllFilters = () => {
+    dispatch(resetSearchbar());
+    dispatch(resetChoosedStatuses());
+    dispatch(resetDateFrom());
+    dispatch(resetDateTo());
+    dispatch(resetSumFrom());
+    dispatch(resetSumTo());
+  };
+
   return (
     <div className={styles._}>
       <div className={styles.leftBlock}>
@@ -23,7 +50,7 @@ function MainFilter({
           <Input
             value={searchbarValue}
             onChange={handleChangeSearchbar}
-            onReset={handleResetSearchbar}
+            onReset={handleResetValue}
             placeholder="Номер заказа или ФИО"
             prefix={<Icon type="search" />}
           />

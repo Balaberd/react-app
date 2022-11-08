@@ -1,17 +1,22 @@
-import { React, useContext } from "react";
+import React from "react";
 import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
-// eslint-disable-next-line import/no-cycle
-import { FiltersContext } from "features/OrdersList/OrdersList";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleStatus } from "features/OrdersList/model/filters/filterOfStatusesSlice";
 import StatusesSelector from "./StatusesSelector/StatusesSelector";
 import styles from "./StatusFilter.module.css";
 import dropdownStyles from "./StatusesSelector/StatusesSelector.module.css";
 
 function StatusFilter() {
-  const { filterOfStatuses, handleChangeStatusChoise } =
-    useContext(FiltersContext);
+  const filterOfStatuses = useSelector((state) => state.filterOfStatuses);
+
+  const dispatch = useDispatch();
+
+  const handleChangeStatusChoise = (status) => {
+    dispatch(toggleStatus(status));
+  };
 
   const allStatuses = Object.keys(filterOfStatuses);
   const checkedOnlyStatuses = allStatuses.filter((el) => filterOfStatuses[el]);

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import rootReducer from "./model";
 
 const { configureStore } = require("@reduxjs/toolkit");

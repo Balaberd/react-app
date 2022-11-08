@@ -1,17 +1,11 @@
-import searchbar from "./filters/searchbarSlice";
-import filterDate from "./filters/filterDateSlice";
-import filterSum from "./filters/filterSumSlice";
-import filterOfStatuses from "./filters/filterOfStatusesSlice";
 import orders from "./orders/ordersSlice";
 import sorter from "./sorter/sorterSlice";
+import filters from "./filters/filtersSlice";
 
 const { combineReducers } = require("@reduxjs/toolkit");
 
 const rootReducer = combineReducers({
-  searchbar,
-  filterDate,
-  filterSum,
-  filterOfStatuses,
+  filters,
   orders,
   sorter,
 });

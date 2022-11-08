@@ -1,5 +1,7 @@
 import { React, useState } from "react";
 import Button from "shared/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFiltersActivation } from "features/OrdersList/model/filters/filtersSlice";
 import styles from "./Filter.module.css";
 import MainFilter from "./MainFilter/MainFilter";
 import AdditionalFilter from "./AdditionalFilter/AdditionalFilter";
@@ -9,6 +11,12 @@ import StatusFilter from "./AdditionalFilter/StatusFilter/StatusFilter";
 
 function Filter() {
   const [isVisible, setIsVisible] = useState(false);
+  const isFIltersActive = useSelector((state) => state.filters.isFiltersActive);
+  const dispatch = useDispatch();
+
+  const handleToggleActiveFilters = () => {
+    dispatch(toggleFiltersActivation());
+  };
 
   const handleToggleAdditionalFilter = () => setIsVisible(!isVisible);
 
@@ -23,7 +31,12 @@ function Filter() {
           <DateFilter />
           <StatusFilter />
           <SumFilter />
-          <Button>Применить</Button>
+          <Button
+            theme={isFIltersActive && "primary"}
+            onClick={handleToggleActiveFilters}
+          >
+            Применить
+          </Button>
         </AdditionalFilter>
       )}
     </div>

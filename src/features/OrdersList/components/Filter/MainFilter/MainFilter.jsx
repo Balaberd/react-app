@@ -6,16 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeSearchbar,
   resetSearchbar,
-} from "features/OrdersList/model/filters/searchbarSlice";
-import { resetChoosedStatuses } from "features/OrdersList/model/filters/filterOfStatusesSlice";
-import {
-  resetDateFrom,
-  resetDateTo,
-} from "features/OrdersList/model/filters/filterDateSlice";
-import {
-  resetSumFrom,
-  resetSumTo,
-} from "features/OrdersList/model/filters/filterSumSlice";
+  resetAllFilters,
+} from "features/OrdersList/model/filters/filtersSlice";
 import styles from "./MainFilter.module.css";
 
 function MainFilter({
@@ -24,7 +16,7 @@ function MainFilter({
 }) {
   const dispatch = useDispatch();
 
-  const searchbarValue = useSelector((state) => state.searchbar);
+  const searchbarValue = useSelector((state) => state.filters.searchbar);
 
   const handleChangeSearchbar = ({ target: { value } }) => {
     dispatch(changeSearchbar(value));
@@ -35,12 +27,7 @@ function MainFilter({
   };
 
   const handleResetAllFilters = () => {
-    dispatch(resetSearchbar());
-    dispatch(resetChoosedStatuses());
-    dispatch(resetDateFrom());
-    dispatch(resetDateTo());
-    dispatch(resetSumFrom());
-    dispatch(resetSumTo());
+    dispatch(resetAllFilters());
   };
 
   return (

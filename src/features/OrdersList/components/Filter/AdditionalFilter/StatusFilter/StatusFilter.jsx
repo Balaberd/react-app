@@ -4,13 +4,13 @@ import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleStatus } from "features/OrdersList/model/filters/filterOfStatusesSlice";
+import { toggleStatus } from "features/OrdersList/model/filters/filtersSlice";
 import StatusesSelector from "./StatusesSelector/StatusesSelector";
 import styles from "./StatusFilter.module.css";
 import dropdownStyles from "./StatusesSelector/StatusesSelector.module.css";
 
 function StatusFilter() {
-  const filterOfStatuses = useSelector((state) => state.filterOfStatuses);
+  const filterOfStatuses = useSelector((state) => state.filters.statuses);
 
   const dispatch = useDispatch();
 

@@ -1,46 +1,46 @@
 import {
-  changeDateFrom,
-  changeDateTo,
-  resetDateFrom,
-  resetDateTo,
-} from "features/OrdersList/model/filters/filterDateSlice";
+  changeMinDate,
+  changeMaxDate,
+  resetMinDate,
+  resetMaxDate,
+} from "features/OrdersList/model/filters/filtersSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "shared/Input/Input";
 import styles from "./DateFilter.module.css";
 
 function DateFilter() {
-  const { dateFrom, dateTo } = useSelector((state) => state.filterDate);
+  const { minDate, maxDate } = useSelector((state) => state.filters);
 
   const dispatch = useDispatch();
 
-  const handleChangeDateFrom = ({ target: { value } }) => {
-    dispatch(changeDateFrom(value));
+  const handleChangeMinDate = ({ target: { value } }) => {
+    dispatch(changeMinDate(value));
   };
-  const handleChangeDateTo = ({ target: { value } }) => {
-    dispatch(changeDateTo(value));
+  const handleChangeMaxDate = ({ target: { value } }) => {
+    dispatch(changeMaxDate(value));
   };
-  const handleResetDateFrom = () => {
-    dispatch(resetDateFrom());
+  const handleResetMinDate = () => {
+    dispatch(resetMinDate());
   };
-  const handleResetDateTo = () => {
-    dispatch(resetDateTo());
+  const handleResetMaxDate = () => {
+    dispatch(resetMaxDate());
   };
 
   return (
     <div className={styles._}>
       <Input
-        value={dateFrom}
-        onChange={handleChangeDateFrom}
-        onReset={handleResetDateFrom}
+        value={minDate}
+        onChange={handleChangeMinDate}
+        onReset={handleResetMinDate}
         label="Дата оформления"
         placeholder="dd.mm.yyyy"
         prefix="c"
       />
       <Input
-        value={dateTo}
-        onChange={handleChangeDateTo}
-        onReset={handleResetDateTo}
+        value={maxDate}
+        onChange={handleChangeMaxDate}
+        onReset={handleResetMaxDate}
         placeholder="dd.mm.yyyy"
         prefix="по"
       />

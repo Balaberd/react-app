@@ -21,7 +21,7 @@ import rowStyles from "../RowMarkup.module.css";
 function OrderListTableHeader() {
   const isAllOrdesChecked = useSelector(
     (state) =>
-      state.orders.allOrders.length === state.orders.chechedOrders.length
+      state.orders.allOrders.length === state.orders.checkedOrders.length
   );
 
   const dispatch = useDispatch();

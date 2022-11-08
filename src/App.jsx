@@ -6,7 +6,7 @@ import store from "./features/OrdersList";
 function App() {
   return (
     <Provider store={store}>
-      <OrdersList />;
+      <OrdersList />
     </Provider>
   );
 }

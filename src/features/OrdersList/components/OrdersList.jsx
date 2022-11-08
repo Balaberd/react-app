@@ -14,19 +14,25 @@ import {
   deleteOrderSelection,
   getOrders,
 } from "../model/orders/ordersSlice";
+import getfiltredOrders from "../lib/getFiltredOrders";
 import getSortedOrders from "../lib/getSortedOrders";
-
-const getOrder = (state) => state.orders.allOrders;
-const getCheckedOrders = (state) => state.orders.chechedOrders;
-
-const getFullName = (obj) =>
-  `${obj.lastName} ${obj.firstName} ${obj.secondName}`;
+import getFiltredOrdersForPage from "../lib/getFiltredOrdersForPage";
 
 function OrdersList() {
   const dispatch = useDispatch();
 
-  const orders = useSelector(getOrder);
-  const checkedOrders = useSelector(getCheckedOrders);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getOrders(ordersMock));
+    }, 500);
+  }, []);
+
+  const { currentPage, pageLimit, checkedOrders, allOrders } = useSelector(
+    (state) => state.orders
+  );
+  const { activeSorter, isIncreaseDirection } = useSelector(
+    (state) => state.sorter
+  );
 
   const handleToggleOrderCheck = (id) => {
     if (checkedOrders.includes(id)) {
@@ -36,30 +42,18 @@ function OrdersList() {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(getOrders(ordersMock));
-    }, 500);
-  }, []);
-
-  const searchbarValue = useSelector((state) => state.searchbar);
-
-  const filtredOrders = searchbarValue
-    ? orders.filter(
-        (order) =>
-          getFullName(order).includes(searchbarValue) ||
-          String(order.index).includes(searchbarValue)
-      )
-    : orders;
-
-  const { activeSorter, isIncreaseDirection } = useSelector(
-    (state) => state.sorter
-  );
+  const filtredOrders = getfiltredOrders(allOrders);
 
   const filtredAndSortedOrders = getSortedOrders(
     filtredOrders,
     activeSorter,
     isIncreaseDirection
+  );
+
+  const ordersForPage = getFiltredOrdersForPage(
+    filtredAndSortedOrders,
+    pageLimit,
+    currentPage
   );
 
   return (
@@ -69,7 +63,7 @@ function OrdersList() {
       <Table>
         <OrderListTableHeader />
         <TableBody>
-          {filtredAndSortedOrders.map((order) => (
+          {ordersForPage.map((order) => (
             <OrderListTableBodyItem
               key={order.id}
               isChecked={checkedOrders.includes(order.id)}
@@ -79,7 +73,7 @@ function OrdersList() {
             />
           ))}
         </TableBody>
-        <OrderListTableFooter />
+        <OrderListTableFooter ordersLength={filtredAndSortedOrders.length} />
       </Table>
     </div>
   );

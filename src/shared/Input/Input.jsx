@@ -19,6 +19,7 @@ function Input({
   postfix,
   className,
   readOnly,
+  onKeyDown = noop,
 }) {
   const lockedPostfix = disabled && (
     <Icon type="locked" className={styles.icon} />
@@ -39,6 +40,7 @@ function Input({
         <div className={styles.wrapper}>
           {prefix}
           <input
+            onKeyDown={onKeyDown}
             className={styles.input}
             placeholder={placeholder}
             value={value}

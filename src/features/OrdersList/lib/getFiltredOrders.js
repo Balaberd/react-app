@@ -3,6 +3,12 @@ import { useSelector } from "react-redux";
 const getFullName = (obj) =>
   `${obj.lastName} ${obj.firstName} ${obj.secondName}`;
 
+const getObjectDate = (dateString) => {
+  const formatDate = dateString.split(".").reverse();
+  formatDate[1] -= 1;
+  return new Date(formatDate.join("/"));
+};
+
 const getfiltredOrders = (orders) => {
   const {
     searchbar,
@@ -37,12 +43,12 @@ const getfiltredOrders = (orders) => {
 
     if (minDate) {
       filtredOrders = filtredOrders.filter(
-        (order) => new Date(order.date) > new Date(minDate)
+        (order) => new Date(order.date) > getObjectDate(minDate)
       );
     }
     if (maxDate) {
       filtredOrders = filtredOrders.filter(
-        (order) => new Date(order.date) < new Date(maxDate)
+        (order) => new Date(order.date) < getObjectDate(maxDate)
       );
     }
 

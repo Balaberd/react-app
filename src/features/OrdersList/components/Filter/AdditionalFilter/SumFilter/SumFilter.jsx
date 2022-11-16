@@ -1,8 +1,6 @@
 import {
   changeMinSum,
   changeMaxSum,
-  resetMinSum,
-  resetMaxSum,
 } from "features/OrdersList/model/filters/filtersSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,10 +19,10 @@ function SumFilter() {
     dispatch(changeMaxSum(value));
   };
   const handleResetMinSum = () => {
-    dispatch(resetMinSum());
+    dispatch(changeMinSum(""));
   };
   const handleResetMaxSum = () => {
-    dispatch(resetMaxSum());
+    dispatch(changeMaxSum(""));
   };
 
   return (

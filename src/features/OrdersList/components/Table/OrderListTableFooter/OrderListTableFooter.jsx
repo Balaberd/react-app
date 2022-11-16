@@ -1,3 +1,4 @@
+import { getCheckedOrdersIdLength } from "features/OrdersList/model/selectors";
 import React from "react";
 import { useSelector } from "react-redux";
 import Button from "shared/Button/Button";
@@ -6,15 +7,20 @@ import TableFooter from "shared/Table/TableFooter/TableFooter";
 import DeletionApprover from "./DeletionApprover/DeletionApprover";
 import styles from "./OrderListTableFooter.module.css";
 import Pagination from "./Pagination/Pagination";
-
-const getNumberOfCheckedOrders = (state) => state.orders.checkedOrders.length;
+import StatusSelector from "./StatusSelector/StatusSelector";
 
 function OrderListTableFooter({ ordersLength }) {
-  const numberOfCheckedOrders = useSelector(getNumberOfCheckedOrders);
+  const numberOfCheckedOrders = useSelector(getCheckedOrdersIdLength);
 
-  const toggleElement = (
+  const toggleElementDeletion = (
     <Button icon="bin" theme="warning" size="short">
       Удалить
+    </Button>
+  );
+
+  const toggleElementChooseStatus = (
+    <Button icon="pencil" theme="primary" size="short">
+      Изменить статус
     </Button>
   );
 
@@ -22,11 +28,18 @@ function OrderListTableFooter({ ordersLength }) {
     <TableFooter className={styles._}>
       <div className={styles.block}>
         <span>Выбрано записей: {numberOfCheckedOrders}</span>
-        <Button icon="pencil" theme="primary" size="short">
-          Изменить статус
-        </Button>
 
-        <Dropdown trigger={toggleElement} childrenClassName={styles.dropdown}>
+        <Dropdown
+          trigger={toggleElementChooseStatus}
+          childrenClassName={styles.statusSelector}
+        >
+          <StatusSelector />
+        </Dropdown>
+
+        <Dropdown
+          trigger={toggleElementDeletion}
+          childrenClassName={styles.deletionApprover}
+        >
           <DeletionApprover numberOfCheckedOrders={numberOfCheckedOrders} />
         </Dropdown>
       </div>

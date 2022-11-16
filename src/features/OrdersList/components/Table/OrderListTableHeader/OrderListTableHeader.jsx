@@ -8,40 +8,38 @@ import Icon from "shared/Icon/Icon";
 import TableHeader from "shared/Table/TableHeader/TableHeader";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  checkAllOrders,
-  deleteAllCheck,
-} from "features/OrdersList/model/orders/ordersSlice";
-import {
-  changeSortDirection,
-  changeSorter,
-} from "features/OrdersList/model/sorter/sorterSlice";
+  changeActiveSorter,
+  changeSorterDirection,
+  checkAllOrdersOnPage,
+} from "features/OrdersList/model/filters/filtersSlice";
 import styles from "./OrderListTableHeader.module.css";
 import rowStyles from "../RowMarkup.module.css";
 
-function OrderListTableHeader() {
-  const isAllOrdesChecked = useSelector(
-    (state) =>
-      state.orders.allOrders.length === state.orders.checkedOrders.length
+function OrderListTableHeader({ allOrdersOnPage }) {
+  const { activeSorter, isAscending, checkedOrdersId } = useSelector(
+    (state) => state.filters
   );
 
   const dispatch = useDispatch();
 
-  const handleToggleAllCheck = () => {
-    if (isAllOrdesChecked) {
-      dispatch(deleteAllCheck());
+  const createHadnleChangeActiveSorter = (sorter) => () => {
+    if (activeSorter === sorter) {
+      dispatch(changeSorterDirection());
     } else {
-      dispatch(checkAllOrders());
+      dispatch(changeActiveSorter(sorter));
     }
   };
 
-  const { activeSorter, isIncreaseDirection } = useSelector(
-    (state) => state.sorter
-  );
+  const allOrdersIdOnPage = allOrdersOnPage.map((el) => el.id);
 
-  const createHadnleChangeActiveSorter = (sorterName) => () => {
-    if (activeSorter !== sorterName) {
-      dispatch(changeSorter(sorterName));
-    } else dispatch(changeSortDirection());
+  const isAllOrdersChecked = allOrdersOnPage.length === checkedOrdersId.length;
+
+  const handleCheckAllOrdersOnPage = () => {
+    if (isAllOrdersChecked) {
+      dispatch(checkAllOrdersOnPage([]));
+    } else {
+      dispatch(checkAllOrdersOnPage(allOrdersIdOnPage));
+    }
   };
 
   return (
@@ -49,8 +47,8 @@ function OrderListTableHeader() {
       <TableRow>
         <TableCell className={rowStyles.checkbox}>
           <Checkbox
-            checked={isAllOrdesChecked}
-            onChange={() => handleToggleAllCheck()}
+            checked={isAllOrdersChecked}
+            onChange={() => handleCheckAllOrdersOnPage()}
           />
         </TableCell>
 
@@ -66,7 +64,7 @@ function OrderListTableHeader() {
           <Icon
             type="arrow"
             className={cn(rowStyles.icon, {
-              [activeSorter === "date" && styles.flipped]: !isIncreaseDirection,
+              [activeSorter === "date" && styles.flipped]: !isAscending,
             })}
           />
         </TableHeaderCell>
@@ -81,8 +79,7 @@ function OrderListTableHeader() {
           <Icon
             type="arrow"
             className={cn(rowStyles.icon, {
-              [activeSorter === "status" && styles.flipped]:
-                !isIncreaseDirection,
+              [activeSorter === "status" && styles.flipped]: !isAscending,
             })}
           />
         </TableHeaderCell>
@@ -98,7 +95,7 @@ function OrderListTableHeader() {
             type="arrow"
             className={cn(rowStyles.icon, {
               [activeSorter === "numberOfPositions" && styles.flipped]:
-                !isIncreaseDirection,
+                !isAscending,
             })}
           />
         </TableHeaderCell>
@@ -113,7 +110,7 @@ function OrderListTableHeader() {
           <Icon
             type="arrow"
             className={cn(rowStyles.icon, {
-              [activeSorter === "sum" && styles.flipped]: !isIncreaseDirection,
+              [activeSorter === "sum" && styles.flipped]: !isAscending,
             })}
           />
         </TableHeaderCell>

@@ -7,16 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderListTableBodyItem from "./Table/OrderListTableBodyItem/OrderListTableBodyItem";
 import OrderListTableFooter from "./Table/OrderListTableFooter/OrderListTableFooter";
 import OrderListTableHeader from "./Table/OrderListTableHeader/OrderListTableHeader";
-import ordersMock from "../lib/orders";
+import ordersMock from "../lib/ordersMock";
 import styles from "./OrdersList.module.css";
+import { getOrders } from "../model/orders/ordersSlice";
 import {
-  addOrderSelection,
-  deleteOrderSelection,
-  getOrders,
-} from "../model/orders/ordersSlice";
-import getfiltredOrders from "../lib/getFiltredOrders";
-import getSortedOrders from "../lib/getSortedOrders";
-import getFiltredOrdersForPage from "../lib/getFiltredOrdersForPage";
+  getCheckedOrdersId,
+  getFiltredOrdersByPageAndAllOrdersLength,
+} from "../model/selectors";
+import { setOrderCheck } from "../model/filters/filtersSlice";
 
 function OrdersList() {
   const dispatch = useDispatch();
@@ -27,33 +25,13 @@ function OrdersList() {
     }, 500);
   }, []);
 
-  const { currentPage, pageLimit, checkedOrders, allOrders } = useSelector(
-    (state) => state.orders
-  );
-  const { activeSorter, isIncreaseDirection } = useSelector(
-    (state) => state.sorter
-  );
-
-  const handleToggleOrderCheck = (id) => {
-    if (checkedOrders.includes(id)) {
-      dispatch(deleteOrderSelection(id));
-    } else {
-      dispatch(addOrderSelection(id));
-    }
+  const checkedOrders = useSelector(getCheckedOrdersId);
+  const handleChangeOrderCheck = (id) => {
+    dispatch(setOrderCheck(id));
   };
 
-  const filtredOrders = getfiltredOrders(allOrders);
-
-  const filtredAndSortedOrders = getSortedOrders(
-    filtredOrders,
-    activeSorter,
-    isIncreaseDirection
-  );
-
-  const ordersForPage = getFiltredOrdersForPage(
-    filtredAndSortedOrders,
-    pageLimit,
-    currentPage
+  const [filtredOrders, ordersLength] = useSelector(
+    getFiltredOrdersByPageAndAllOrdersLength
   );
 
   return (
@@ -61,19 +39,19 @@ function OrdersList() {
       <Header />
       <Filter />
       <Table>
-        <OrderListTableHeader />
+        <OrderListTableHeader allOrdersOnPage={filtredOrders} />
         <TableBody>
-          {ordersForPage.map((order) => (
+          {filtredOrders.map((order) => (
             <OrderListTableBodyItem
               key={order.id}
               isChecked={checkedOrders.includes(order.id)}
-              onChangeCheck={() => handleToggleOrderCheck(order.id)}
+              onChangeCheck={() => handleChangeOrderCheck(order.id)}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...order}
             />
           ))}
         </TableBody>
-        <OrderListTableFooter ordersLength={filtredAndSortedOrders.length} />
+        <OrderListTableFooter ordersLength={ordersLength} />
       </Table>
     </div>
   );

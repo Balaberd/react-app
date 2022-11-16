@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-mutable-exports
-const ordersMock = [
+let ordersMock = [
   {
     id: "6367d355131ac20c376224a4",
     index: 1,
@@ -4401,7 +4401,7 @@ const ordersMock = [
     secondName: "Игоревич",
   },
 ];
-
-// ordersMock = ordersMock.map((el) => ({ ...el, date: new Date(el.date) }));
-
+ordersMock = ordersMock.map((order) =>
+  order.status === "canceled" ? { ...order, sum: 0 } : order
+);
 export default ordersMock;

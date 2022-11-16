@@ -1,8 +1,6 @@
 import {
   changeMinDate,
   changeMaxDate,
-  resetMinDate,
-  resetMaxDate,
 } from "features/OrdersList/model/filters/filtersSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,10 +19,10 @@ function DateFilter() {
     dispatch(changeMaxDate(value));
   };
   const handleResetMinDate = () => {
-    dispatch(resetMinDate());
+    dispatch(changeMinDate(""));
   };
   const handleResetMaxDate = () => {
-    dispatch(resetMaxDate());
+    dispatch(changeMaxDate(""));
   };
 
   return (

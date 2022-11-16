@@ -3,20 +3,21 @@ const { createSlice } = require("@reduxjs/toolkit");
 const initialState = {
   searchbar: "",
 
-  isFiltersActive: false,
+  isAdditionalFiltersActive: false,
 
   minDate: "",
   maxDate: "",
-  statuses: {
-    new: false,
-    calculating: false,
-    confirm: false,
-    postponed: false,
-    done: false,
-    canceled: false,
-  },
+  checkedStatuses: [],
   minSum: "",
   maxSum: "",
+
+  activeSorter: "date",
+  isAscending: true,
+
+  checkedOrdersId: [],
+
+  pageLimit: 30,
+  currentPage: 1,
 };
 
 const filtersSlice = createSlice({
@@ -24,67 +25,121 @@ const filtersSlice = createSlice({
   initialState,
   reducers: {
     changeSearchbar(state, action) {
-      return { ...state, searchbar: action.payload };
-    },
-    resetSearchbar(state) {
-      return { ...state, searchbar: "" };
-    },
-    changeMinDate(state, action) {
-      return { ...state, minDate: action.payload };
-    },
-    changeMaxDate(state, action) {
-      return { ...state, maxDate: action.payload };
-    },
-    resetMinDate(state) {
-      return { ...state, minDate: "" };
-    },
-    resetMaxDate(state) {
-      return { ...state, maxDate: "" };
-    },
-    toggleStatus(state, action) {
       return {
         ...state,
-        statuses: {
-          ...state.statuses,
-          [action.payload]: !state.statuses[action.payload],
-        },
+        searchbar: action.payload,
+        checkedOrdersId: [],
       };
     },
+
+    changeMinDate(state, action) {
+      return {
+        ...state,
+        isAdditionalFiltersActive: false,
+        minDate: action.payload,
+      };
+    },
+
+    changeMaxDate(state, action) {
+      return {
+        ...state,
+        isAdditionalFiltersActive: false,
+        maxDate: action.payload,
+      };
+    },
+
+    toggleStatusCheck(state, action) {
+      if (state.checkedStatuses.includes(action.payload)) {
+        return {
+          ...state,
+          isAdditionalFiltersActive: false,
+          checkedStatuses: state.checkedStatuses.filter(
+            (status) => status !== action.payload
+          ),
+        };
+      }
+      return {
+        ...state,
+        isAdditionalFiltersActive: false,
+        checkedStatuses: [...state.checkedStatuses, action.payload],
+      };
+    },
+
     changeMinSum(state, action) {
-      return { ...state, minSum: action.payload };
+      return {
+        ...state,
+        isAdditionalFiltersActive: false,
+        minSum: action.payload,
+      };
     },
     changeMaxSum(state, action) {
-      return { ...state, maxSum: action.payload };
+      return {
+        ...state,
+        isAdditionalFiltersActive: false,
+        maxSum: action.payload,
+      };
     },
-    resetMinSum(state) {
-      return { ...state, minSum: "" };
+
+    activateAdditionalFilters(state) {
+      return { ...state, isAdditionalFiltersActive: true, checkedOrdersId: [] };
     },
-    resetMaxSum(state) {
-      return { ...state, maxSum: "" };
+
+    changeActiveSorter(state, action) {
+      return {
+        ...state,
+        activeSorter: action.payload,
+      };
     },
-    toggleFiltersActivation(state) {
-      return { ...state, isFiltersActive: !state.isFiltersActive };
+
+    changeSorterDirection(state) {
+      return { ...state, isAscending: !state.isAscending };
     },
+
     resetAllFilters() {
       return initialState;
+    },
+
+    setOrderCheck(state, action) {
+      if (state.checkedOrdersId.includes(action.payload)) {
+        return {
+          ...state,
+          checkedOrdersId: state.checkedOrdersId.filter(
+            (id) => id !== action.payload
+          ),
+        };
+      }
+      return {
+        ...state,
+        checkedOrdersId: [...state.checkedOrdersId, action.payload],
+      };
+    },
+
+    checkAllOrdersOnPage(state, action) {
+      return { ...state, checkedOrdersId: action.payload };
+    },
+
+    changeCurrentPage(state, action) {
+      return { ...state, currentPage: action.payload, checkedOrdersId: [] };
     },
   },
 });
 
 export const {
   changeSearchbar,
-  resetSearchbar,
   changeMinDate,
   changeMaxDate,
-  resetMinDate,
-  resetMaxDate,
   toggleStatus,
   resetAllFilters,
   changeMinSum,
   changeMaxSum,
-  resetMinSum,
-  resetMaxSum,
   toggleFiltersActivation,
+  toggleStatusCheck,
+  activateAdditionalFilters,
+  changeActiveSorter,
+  changeSorterDirection,
+  setOrderCheck,
+  changeCurrentPage,
+  checkAllOrdersOnPage,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

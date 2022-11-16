@@ -3,30 +3,21 @@ import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleStatus } from "features/OrdersList/model/filters/filtersSlice";
+import { useSelector } from "react-redux";
+import { getCheckedStatuses } from "features/OrdersList/model/selectors";
 import StatusesSelector from "./StatusesSelector/StatusesSelector";
 import styles from "./StatusFilter.module.css";
 import dropdownStyles from "./StatusesSelector/StatusesSelector.module.css";
 
 function StatusFilter() {
-  const filterOfStatuses = useSelector((state) => state.filters.statuses);
+  const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
+  const checkedStatuses = useSelector(getCheckedStatuses);
 
-  const dispatch = useDispatch();
-
-  const handleChangeStatusChoise = (status) => {
-    dispatch(toggleStatus(status));
-  };
-
-  const allStatuses = Object.keys(filterOfStatuses);
-  const checkedOnlyStatuses = allStatuses.filter((el) => filterOfStatuses[el]);
-
-  const statusesValueForInput =
-    checkedOnlyStatuses.length === 0 ||
-    checkedOnlyStatuses.length === allStatuses.length
+  const statusesForInput =
+    checkedStatuses.length === 0 || checkedStatuses.length === statuses.length
       ? "Любой"
-      : checkedOnlyStatuses
-          .map((el) => STATUSES_NAMES_TRANSLATION[el])
+      : checkedStatuses
+          .map((status) => STATUSES_NAMES_TRANSLATION[status])
           .join(", ");
 
   const toggleElement = <Button icon="arrow" />;
@@ -37,17 +28,14 @@ function StatusFilter() {
       childrenClassName={dropdownStyles._}
       triggerClassNameWithActiveTrigger={styles.flipped}
     >
-      <StatusesSelector
-        statusValues={filterOfStatuses}
-        handleChangeStatusValues={handleChangeStatusChoise}
-      />
+      <StatusesSelector />
     </Dropdown>
   );
 
   return (
     <div className={styles._}>
       <Input
-        value={statusesValueForInput}
+        value={statusesForInput}
         readOnly
         label="Статус заказа"
         postfix={dropdownElement}

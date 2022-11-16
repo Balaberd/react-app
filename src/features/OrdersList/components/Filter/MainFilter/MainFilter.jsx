@@ -5,9 +5,9 @@ import Icon from "shared/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeSearchbar,
-  resetSearchbar,
   resetAllFilters,
 } from "features/OrdersList/model/filters/filtersSlice";
+import { getSearchbarValue } from "features/OrdersList/model/selectors";
 import styles from "./MainFilter.module.css";
 
 function MainFilter({
@@ -16,14 +16,14 @@ function MainFilter({
 }) {
   const dispatch = useDispatch();
 
-  const searchbarValue = useSelector((state) => state.filters.searchbar);
+  const searchbarValue = useSelector(getSearchbarValue);
 
   const handleChangeSearchbar = ({ target: { value } }) => {
     dispatch(changeSearchbar(value));
   };
 
   const handleResetValue = () => {
-    dispatch(resetSearchbar());
+    dispatch(changeSearchbar(""));
   };
 
   const handleResetAllFilters = () => {

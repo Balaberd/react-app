@@ -2,9 +2,6 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
   allOrders: [],
-  checkedOrders: [],
-  pageLimit: 30,
-  currentPage: 3,
 };
 
 const ordersSlice = createSlice({
@@ -14,44 +11,16 @@ const ordersSlice = createSlice({
     getOrders(state, action) {
       return { ...state, allOrders: action.payload };
     },
-    addOrderSelection(state, action) {
-      return {
-        ...state,
-        checkedOrders: [...state.checkedOrders, action.payload],
-      };
-    },
-    deleteOrderSelection(state, action) {
-      return {
-        ...state,
-        checkedOrders: state.checkedOrders.filter(
-          (id) => id !== action.payload
-        ),
-      };
-    },
-    checkAllOrders(state) {
-      return {
-        ...state,
-        checkedOrders: state.allOrders.map((order) => order.id),
-      };
-    },
-    deleteAllCheck(state) {
-      return {
-        ...state,
-        checkedOrders: [],
-      };
-    },
-    setCurrentPage(state, action) {
-      return { ...state, currentPage: action.payload };
+    changeOrders(state, action) {
+      const newOrders = state.allOrders.map((order) =>
+        action.payload.checkedOrders.includes(order.id)
+          ? { ...order, status: action.payload.newStatus }
+          : order
+      );
+      return { ...state, allOrders: newOrders };
     },
   },
 });
 
-export const {
-  getOrders,
-  addOrderSelection,
-  deleteOrderSelection,
-  checkAllOrders,
-  deleteAllCheck,
-  setCurrentPage,
-} = ordersSlice.actions;
+export const { getOrders, changeOrders } = ordersSlice.actions;
 export default ordersSlice.reducer;

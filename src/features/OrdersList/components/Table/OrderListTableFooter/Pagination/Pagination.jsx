@@ -8,6 +8,7 @@ import styles from "./Pagination.module.css";
 
 const createButton = (pageNumber, currentPage, callback) => (
   <Button
+    key={pageNumber}
     className={styles.buttons}
     size="short"
     theme={pageNumber === currentPage && "primary"}

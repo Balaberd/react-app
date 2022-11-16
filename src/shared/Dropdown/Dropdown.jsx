@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import cn from "classnames";
 import styles from "./Dropdown.module.css";
 
@@ -15,7 +15,7 @@ function Dropdown({
   childrenClassName,
   triggerClassNameWithActiveTrigger,
 }) {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleDropdown = () => {
     setIsVisible(!isVisible);

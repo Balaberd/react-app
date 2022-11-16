@@ -113,6 +113,9 @@ const filtersSlice = createSlice({
         checkedOrdersId: [...state.checkedOrdersId, action.payload],
       };
     },
+    resetAllCheckOrders(state) {
+      return { ...state, checkedOrdersId: [] };
+    },
 
     checkAllOrdersOnPage(state, action) {
       return { ...state, checkedOrdersId: action.payload };
@@ -140,6 +143,7 @@ export const {
   setOrderCheck,
   changeCurrentPage,
   checkAllOrdersOnPage,
+  resetAllCheckOrders,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

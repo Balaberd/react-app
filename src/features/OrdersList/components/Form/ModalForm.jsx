@@ -1,26 +1,31 @@
-/* eslint-disable no-unused-vars */
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
 import cn from "classnames";
-import { React, useState } from "react";
-import { changeModalValue } from "features/OrdersList/model/modal/modalSlice";
+import { React } from "react";
+import {
+  changeModalValue,
+  closeModal,
+} from "features/OrdersList/model/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
 import { getFormatDate } from "features/OrdersList/lib/getObjectDate";
 import { changeOrder } from "features/OrdersList/model/orders/ordersSlice";
 import styles from "./ModalForm.module.css";
 import OrderDetail from "./OrderDetail/OrderDetail";
+import StatusSelectorByModal from "./StatusSelectorByModal/StatusSelectorByModal";
+import dropdownStyles from "./StatusSelectorByModal/StatusSelectorByModal.module.css";
 
 function ModalForm() {
   const toggleElement = <Button icon="arrow" />;
+
   const dropdownElement = (
     <Dropdown
       trigger={toggleElement}
-      // childrenClassName={dropdownStyles._}
+      childrenClassName={dropdownStyles._}
       triggerClassNameWithActiveTrigger={styles.flipped}
     >
-      {/* <StatusesSelector /> */}
+      <StatusSelectorByModal />
     </Dropdown>
   );
 
@@ -29,7 +34,7 @@ function ModalForm() {
     orderId,
     index,
     date,
-    fullName,
+    customerName,
     status,
     confirmationСodeValue,
     confirmationСode,
@@ -48,14 +53,23 @@ function ModalForm() {
   const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
 
   const handleChangeOrder = () => {
-    dispatch(changeOrder({ id: orderId, lastName: fullName, status }));
+    if (isEnteredCodeCorrect)
+      dispatch(changeOrder({ id: orderId, customerName, status }));
+  };
+
+  const closeModalForm = () => {
+    dispatch(closeModal());
   };
 
   return (
     <div className={cn(styles._, { [styles.active]: isModalFormActive })}>
       <div className={styles.header}>
         Заявка #{index}
-        <Button className={styles.button} icon="xLarge" />
+        <Button
+          className={styles.button}
+          icon="xLarge"
+          onClick={closeModalForm}
+        />
       </div>
 
       <div className={styles.body}>
@@ -65,9 +79,9 @@ function ModalForm() {
           label="Дата и время заказа"
         />
         <Input
-          value={fullName}
-          onChange={createHandleValueChanger("fullName")}
-          onReset={createHandleValueReset("fullName")}
+          value={customerName}
+          onChange={createHandleValueChanger("customerName")}
+          onReset={createHandleValueReset("customerName")}
           label="ФИО покупателя"
         />
         <OrderDetail />

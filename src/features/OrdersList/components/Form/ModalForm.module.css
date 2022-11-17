@@ -83,3 +83,7 @@
 
   background-color: var(--additional-filter-background);
 }
+
+.flipped {
+  transform: rotateX(180deg);
+}

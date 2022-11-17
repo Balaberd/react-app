@@ -5,7 +5,7 @@ const initialState = {
 
   orderId: "",
   index: "",
-  fullName: "",
+  customerName: "",
   status: "",
   date: "",
 
@@ -21,7 +21,7 @@ const modalSlice = createSlice({
       return {
         ...state,
         isModalFormActive: true,
-        fullName: `${action.payload.lastName} ${action.payload.firstName} ${action.payload.secondName}`,
+        customerName: action.payload.customerName,
         status: action.payload.status,
         orderId: action.payload.id,
         index: action.payload.index,

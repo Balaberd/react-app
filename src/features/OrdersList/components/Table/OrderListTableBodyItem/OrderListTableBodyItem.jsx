@@ -4,6 +4,7 @@ import TableRow from "shared/Table/TableRow/TableRow";
 import TableCell from "shared/Table/TableCell/TableCell";
 import Checkbox from "shared/Chechbox/Checkbox";
 import { getFormatDate } from "features/OrdersList/lib/getObjectDate";
+import { useSelector } from "react-redux";
 import StatusCell from "./StatusCell/StatusCell";
 import rowStyles from "../RowMarkup.module.css";
 import styles from "./OrderListTableBodyItem.module.css";
@@ -11,21 +12,23 @@ import styles from "./OrderListTableBodyItem.module.css";
 function OrderListTableBodyItem({
   isChecked,
   onChangeCheck,
+  id,
   index,
   date,
   status,
   numberOfPositions,
   sum,
-  lastName,
-  firstName,
-  secondName,
+  customerName,
   onClick,
 }) {
   const RUB_SYMBOL = <span>&#8381;</span>;
+  const checkedModalFormOrderId = useSelector((state) => state.modal.orderId);
   return (
     <TableRow
       onClick={onClick}
-      className={cn(styles.bodyRow, { [styles.checked]: isChecked })}
+      className={cn(styles.bodyRow, {
+        [styles.checked]: isChecked || checkedModalFormOrderId === id,
+      })}
     >
       <TableCell className={rowStyles.checkbox}>
         <Checkbox checked={isChecked} onChange={onChangeCheck} />
@@ -50,9 +53,7 @@ function OrderListTableBodyItem({
       </TableCell>
 
       <TableCell className={rowStyles.name}>
-        {status === "canceled"
-          ? lastName
-          : `${lastName} ${firstName} ${secondName}`}
+        {status === "canceled" ? customerName.split(" ")[0] : customerName}
       </TableCell>
     </TableRow>
   );

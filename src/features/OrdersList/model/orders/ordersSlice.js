@@ -25,7 +25,7 @@ const ordersSlice = createSlice({
           ? {
               ...order,
               status: action.payload.status,
-              lastName: action.payload.lastName,
+              customerName: action.payload.customerName,
             }
           : order
       );

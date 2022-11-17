@@ -63,7 +63,7 @@ export const getFiltredOrdersByPageAndAllOrdersLength = (state) => {
 
   const ordersByPage = filtredAndSorted.filter(
     (order, index) =>
-      index > pageLimit * (currentPage - 1) && index <= pageLimit * currentPage
+      index >= pageLimit * (currentPage - 1) && index <= pageLimit * currentPage
   );
   return [ordersByPage, filtredAndSorted.length];
 };

@@ -20,8 +20,6 @@
 
   fill: var(--main-elements-color);
   stroke: var(--main-elements-color);
-
-  transition: all ease-in-out 0.25s;
 }
 
 .iconOnly {

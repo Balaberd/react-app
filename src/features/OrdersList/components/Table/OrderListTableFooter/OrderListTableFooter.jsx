@@ -24,8 +24,6 @@ function OrderListTableFooter({ ordersLength }) {
     </Button>
   );
 
-  /** ********************* */
-
   return (
     <TableFooter className={styles._}>
       <div className={styles.block}>

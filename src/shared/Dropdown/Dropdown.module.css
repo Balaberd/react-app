@@ -5,6 +5,8 @@
 .overlay {
   position: absolute;
 
+  z-index: 2;
+
   font-size: 13px;
   background-color: var(--background-color);
   border-radius: 0.5rem;

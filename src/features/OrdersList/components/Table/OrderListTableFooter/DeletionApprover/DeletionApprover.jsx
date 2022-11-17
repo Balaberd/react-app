@@ -1,4 +1,7 @@
-import { resetAllCheckOrders } from "features/OrdersList/model/filters/filtersSlice";
+import {
+  changeCurrentPage,
+  resetAllCheckOrders,
+} from "features/OrdersList/model/filters/filtersSlice";
 import { deleteOrders } from "features/OrdersList/model/orders/ordersSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +14,7 @@ function DeletionApprover({ numberOfCheckedOrders }) {
   const handleDeleteChoosedOrders = () => {
     dispatch(deleteOrders(checkedOrders));
     dispatch(resetAllCheckOrders());
+    dispatch(changeCurrentPage(1));
   };
 
   return (

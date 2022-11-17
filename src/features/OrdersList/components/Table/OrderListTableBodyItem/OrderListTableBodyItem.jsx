@@ -3,16 +3,10 @@ import cn from "classnames";
 import TableRow from "shared/Table/TableRow/TableRow";
 import TableCell from "shared/Table/TableCell/TableCell";
 import Checkbox from "shared/Chechbox/Checkbox";
+import { getFormatDate } from "features/OrdersList/lib/getObjectDate";
 import StatusCell from "./StatusCell/StatusCell";
 import rowStyles from "../RowMarkup.module.css";
 import styles from "./OrderListTableBodyItem.module.css";
-
-const getFormatDate = (date) => {
-  const objectDate = new Date(date);
-  return `${objectDate.toLocaleDateString()}, ${objectDate
-    .toLocaleTimeString()
-    .slice(0, 5)}`;
-};
 
 function OrderListTableBodyItem({
   isChecked,
@@ -25,10 +19,14 @@ function OrderListTableBodyItem({
   lastName,
   firstName,
   secondName,
+  onClick,
 }) {
   const RUB_SYMBOL = <span>&#8381;</span>;
   return (
-    <TableRow className={cn(styles.bodyRow, { [styles.checked]: isChecked })}>
+    <TableRow
+      onClick={onClick}
+      className={cn(styles.bodyRow, { [styles.checked]: isChecked })}
+    >
       <TableCell className={rowStyles.checkbox}>
         <Checkbox checked={isChecked} onChange={onChangeCheck} />
       </TableCell>

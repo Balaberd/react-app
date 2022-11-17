@@ -19,6 +19,18 @@ const ordersSlice = createSlice({
       );
       return { ...state, allOrders: newOrders };
     },
+    changeOrder(state, action) {
+      const newOrders = state.allOrders.map((order) =>
+        order.id === action.payload.id
+          ? {
+              ...order,
+              status: action.payload.status,
+              lastName: action.payload.lastName,
+            }
+          : order
+      );
+      return { ...state, allOrders: newOrders };
+    },
     deleteOrders(state, action) {
       const newOrders = state.allOrders.filter(
         (order) => !action.payload.includes(order.id)
@@ -28,5 +40,6 @@ const ordersSlice = createSlice({
   },
 });
 
-export const { getOrders, changeOrders, deleteOrders } = ordersSlice.actions;
+export const { getOrders, changeOrders, deleteOrders, changeOrder } =
+  ordersSlice.actions;
 export default ordersSlice.reducer;

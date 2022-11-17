@@ -1,5 +1,5 @@
+import { getObjectDate } from "features/OrdersList/lib/getObjectDate";
 import sortByKey from "features/OrdersList/lib/sortByKey";
-import getObjectDate from "features/OrdersList/lib/getObjectDate";
 
 export const getCheckedStatuses = (state) => state.filters.checkedStatuses;
 export const getSearchbarValue = (state) => state.filters.searchbar;

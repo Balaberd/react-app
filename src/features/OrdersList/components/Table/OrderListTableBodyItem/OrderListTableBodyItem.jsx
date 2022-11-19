@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import cn from "classnames";
 import TableRow from "shared/Table/TableRow/TableRow";
@@ -25,7 +27,6 @@ function OrderListTableBodyItem({
   const checkedModalFormOrderId = useSelector((state) => state.modal.orderId);
   return (
     <TableRow
-      onClick={onClick}
       className={cn(styles.bodyRow, {
         [styles.checked]: isChecked || checkedModalFormOrderId === id,
       })}
@@ -34,27 +35,29 @@ function OrderListTableBodyItem({
         <Checkbox checked={isChecked} onChange={onChangeCheck} />
       </TableCell>
 
-      <TableCell className={rowStyles.index}>{index}</TableCell>
+      <div className={styles.withoutCheckbox} onClick={onClick}>
+        <TableCell className={rowStyles.index}>{index}</TableCell>
 
-      <TableCell className={rowStyles.date}>{getFormatDate(date)}</TableCell>
+        <TableCell className={rowStyles.date}>{getFormatDate(date)}</TableCell>
 
-      <TableCell className={rowStyles.status}>
-        <StatusCell status={status} />
-      </TableCell>
+        <TableCell className={rowStyles.status}>
+          <StatusCell status={status} />
+        </TableCell>
 
-      <TableCell className={rowStyles.numberOfPositions}>
-        {numberOfPositions}
-      </TableCell>
+        <TableCell className={rowStyles.numberOfPositions}>
+          {numberOfPositions}
+        </TableCell>
 
-      <TableCell className={rowStyles.sum}>
-        {status === "canceled" ? "-" : sum.toLocaleString("ru")}
-        &nbsp;
-        {status !== "canceled" && RUB_SYMBOL}
-      </TableCell>
+        <TableCell className={rowStyles.sum}>
+          {status === "canceled" ? "-" : sum.toLocaleString("ru")}
+          &nbsp;
+          {status !== "canceled" && RUB_SYMBOL}
+        </TableCell>
 
-      <TableCell className={rowStyles.name}>
-        {status === "canceled" ? customerName.split(" ")[0] : customerName}
-      </TableCell>
+        <TableCell className={rowStyles.name}>
+          {status === "canceled" ? customerName.split(" ")[0] : customerName}
+        </TableCell>
+      </div>
     </TableRow>
   );
 }

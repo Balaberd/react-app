@@ -19,7 +19,7 @@
   position: fixed;
   z-index: 2;
 
-  transition: 1s;
+  transition: 0.5s;
 
   visibility: hidden;
 }

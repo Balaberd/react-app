@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
@@ -57,57 +59,68 @@ function ModalForm() {
       dispatch(changeOrder({ id: orderId, customerName, status }));
   };
 
-  const closeModalForm = () => {
+  const handleCloseModal = () => {
     dispatch(closeModal());
   };
 
   return (
-    <div className={cn(styles._, { [styles.active]: isModalFormActive })}>
-      <div className={styles.header}>
-        Заявка #{index}
-        <Button
-          className={styles.button}
-          icon="xLarge"
-          onClick={closeModalForm}
-        />
-      </div>
+    <div className={styles._}>
+      <div
+        onClick={handleCloseModal}
+        className={cn(styles.modalBackground, {
+          [styles.active]: isModalFormActive,
+        })}
+      />
 
-      <div className={styles.body}>
-        <Input
-          disabled
-          value={getFormatDate(date)}
-          label="Дата и время заказа"
-        />
-        <Input
-          value={customerName}
-          onChange={createHandleValueChanger("customerName")}
-          onReset={createHandleValueReset("customerName")}
-          label="ФИО покупателя"
-        />
-        <OrderDetail />
-        <Input disabled value="Новичок" label="Уровень лояльности" />
+      <div
+        className={cn(styles.modalForm, { [styles.active]: isModalFormActive })}
+      >
+        <div className={styles.header}>
+          Заявка #{index}
+          <Button
+            className={styles.button}
+            icon="xLarge"
+            onClick={handleCloseModal}
+          />
+        </div>
 
-        <Input
-          value={STATUSES_NAMES_TRANSLATION[status]}
-          readOnly
-          label="Статус заказа"
-          postfix={dropdownElement}
-        />
+        <div className={styles.body}>
+          <Input
+            disabled
+            value={getFormatDate(date)}
+            label="Дата и время заказа"
+          />
+          <Input
+            value={customerName}
+            onChange={createHandleValueChanger("customerName")}
+            onReset={createHandleValueReset("customerName")}
+            label="ФИО покупателя"
+          />
+          <OrderDetail />
+          <Input disabled value="Новичок" label="Уровень лояльности" />
 
-        <Input
-          label="Код подтверждения"
-          value={confirmationСodeValue}
-          onChange={createHandleValueChanger("confirmationСodeValue")}
-          onReset={createHandleValueReset("confirmationСodeValue")}
-          isIncorrect={!isEnteredCodeCorrect}
-        />
-      </div>
+          <Input
+            value={STATUSES_NAMES_TRANSLATION[status]}
+            readOnly
+            label="Статус заказа"
+            postfix={dropdownElement}
+          />
 
-      <div className={styles.footer}>
-        Ошибка или индикатор загрузки
-        <Button icon="check" theme="primary" onClick={handleChangeOrder}>
-          Сохранить
-        </Button>
+          <Input
+            label="Код подтверждения"
+            value={confirmationСodeValue}
+            onChange={createHandleValueChanger("confirmationСodeValue")}
+            onReset={createHandleValueReset("confirmationСodeValue")}
+            isIncorrect={!isEnteredCodeCorrect}
+          />
+        </div>
+
+        <div className={styles.footer}>
+          Ошибка или индикатор загрузки
+          <Button icon="check" theme="primary" onClick={handleChangeOrder}>
+            Сохранить
+          </Button>
+        </div>
       </div>
     </div>
   );

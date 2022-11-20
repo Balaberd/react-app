@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
+import { v4 as uuidv4 } from "uuid";
 import ChoosePage from "./ChoosePage/ChoosePage";
 import styles from "./Pagination.module.css";
 
 const createButton = (pageNumber, currentPage, callback) => (
   <Button
-    key={pageNumber}
+    key={uuidv4()}
     className={styles.buttons}
     size="short"
     theme={pageNumber === currentPage && "primary"}
@@ -45,6 +46,10 @@ const createPaginationElement = (
 };
 
 function Pagination({ ordersLength }) {
+  const [externalDropdownSetter, setExternalDropdownSetter] = useState(false);
+  const handleToggleDropdown = () => {
+    setExternalDropdownSetter(!externalDropdownSetter);
+  };
   const { pageLimit, currentPage } = useSelector((state) => state.filters);
   const maxPage = Math.ceil(ordersLength / pageLimit);
 
@@ -64,11 +69,6 @@ function Pagination({ ordersLength }) {
     createButton,
     handleChangePage
   );
-
-  const [externalDropdownSetter, setExternalDropdownSetter] = useState(true);
-  const handleToggleDropdown = () => {
-    setExternalDropdownSetter(!externalDropdownSetter);
-  };
 
   return (
     <div className={styles._}>

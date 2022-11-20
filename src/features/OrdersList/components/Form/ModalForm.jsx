@@ -2,7 +2,7 @@ import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
 import cn from "classnames";
-import { React } from "react";
+import { React, useState } from "react";
 import {
   changeModalValue,
   closeModal,
@@ -14,20 +14,21 @@ import { getFormatedDate } from "features/OrdersList/lib/date";
 import styles from "./ModalForm.module.css";
 import OrderDetail from "./OrderDetail/OrderDetail";
 import StatusSelectorByModal from "./StatusSelectorByModal/StatusSelectorByModal";
-import dropdownStyles from "./StatusSelectorByModal/StatusSelectorByModal.module.css";
+import dropdownSelectorStyles from "./StatusSelectorByModal/StatusSelectorByModal.module.css";
+import DropdownCloseApprover from "./DropdownCloseApprover/DropdownCloseApprover";
+import dropdownCloseApproverStyle from "./DropdownCloseApprover/DropdownCloseApprover.module.css";
 
 function ModalForm() {
-  const toggleElement = <Button icon="arrow" />;
-
-  const dropdownElement = (
-    <Dropdown
-      trigger={toggleElement}
-      childrenClassName={dropdownStyles._}
-      triggerClassNameWithActiveTrigger={styles.flipped}
-    >
-      <StatusSelectorByModal />
-    </Dropdown>
-  );
+  const [isSelectorDropdownVisible, setIsSelectorDropdownVisible] =
+    useState(false);
+  const handleToggleSelectorVisibility = () => {
+    setIsSelectorDropdownVisible(!isSelectorDropdownVisible);
+  };
+  const [isApproveDropdownVisible, setIsApproveDropdownVisible] =
+    useState(false);
+  const handleToggleApproverVisibility = () => {
+    setIsApproveDropdownVisible(!isApproveDropdownVisible);
+  };
 
   const {
     isModalFormActive,
@@ -50,16 +51,49 @@ function ModalForm() {
     dispatch(changeModalValue({ valueName, newValue: "" }));
   };
 
-  const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
-
-  const handleChangeOrder = () => {
-    if (isEnteredCodeCorrect)
-      dispatch(changeOrder({ id: orderId, customerName, status }));
-  };
-
   const handleCloseModal = () => {
     dispatch(closeModal());
+    setIsApproveDropdownVisible(false);
   };
+
+  const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
+  const handleChangeOrder = () => {
+    if (isEnteredCodeCorrect) {
+      dispatch(changeOrder({ id: orderId, customerName, status }));
+      handleCloseModal();
+    }
+  };
+
+  const triggerSelectorElement = <Button icon="arrow" />;
+
+  const dropdownSelectorElement = (
+    <Dropdown
+      externalVisibilityValue={isSelectorDropdownVisible}
+      externalVisibilitySetter={handleToggleSelectorVisibility}
+      trigger={triggerSelectorElement}
+      childrenClassName={dropdownSelectorStyles._}
+      triggerClassNameWithActiveTrigger={styles.flipped}
+    >
+      <StatusSelectorByModal onDropdownClose={handleToggleSelectorVisibility} />
+    </Dropdown>
+  );
+
+  const triggerApproveChangeElement = <Button icon="xLarge" />;
+
+  const dropdownApproveChangeElement = (
+    <Dropdown
+      externalVisibilityValue={isApproveDropdownVisible}
+      externalVisibilitySetter={handleToggleApproverVisibility}
+      triggerClassName={styles.button}
+      trigger={triggerApproveChangeElement}
+      childrenClassName={dropdownCloseApproverStyle._}
+    >
+      <DropdownCloseApprover
+        onDropdownClose={handleToggleApproverVisibility}
+        onModalClose={handleCloseModal}
+      />
+    </Dropdown>
+  );
 
   return (
     <div className={styles._}>
@@ -74,13 +108,8 @@ function ModalForm() {
       >
         <div className={styles.header}>
           Заявка #{index}
-          <Button
-            className={styles.button}
-            icon="xLarge"
-            onClick={handleCloseModal}
-          />
+          {dropdownApproveChangeElement}
         </div>
-
         <div className={styles.body}>
           <Input
             disabled
@@ -100,7 +129,7 @@ function ModalForm() {
             value={STATUSES_NAMES_TRANSLATION[status]}
             readOnly
             label="Статус заказа"
-            postfix={dropdownElement}
+            postfix={dropdownSelectorElement}
           />
 
           <Input
@@ -108,7 +137,9 @@ function ModalForm() {
             value={confirmationСodeValue}
             onChange={createHandleValueChanger("confirmationСodeValue")}
             onReset={createHandleValueReset("confirmationСodeValue")}
-            isIncorrect={!isEnteredCodeCorrect}
+            isIncorrect={
+              !isEnteredCodeCorrect && confirmationСodeValue.length > 0
+            }
           />
         </div>
 

@@ -4,13 +4,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./StatusSelectorByModal.module.css";
 
-function StatusSelectorByModal() {
+function StatusSelectorByModal({ onDropdownClose }) {
   const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
   const modalStatus = useSelector((state) => state.modal.status);
 
   const dispatch = useDispatch();
   const handleChangeModalStatus = (newStatus) => {
     dispatch(changeModalValue({ valueName: "status", newValue: newStatus }));
+    onDropdownClose();
   };
 
   return (

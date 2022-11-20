@@ -6,7 +6,6 @@ import Input from "shared/Input/Input";
 
 const ENTER_KEY_CODE = 13;
 
-// eslint-disable-next-line no-unused-vars
 function ChoosePage({ maxPage, onDropdownClose }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -32,7 +31,7 @@ function ChoosePage({ maxPage, onDropdownClose }) {
     ) {
       dispatch(resetCheckedOrders());
       dispatch(changeCurrentPage(Number(pageNumber)));
-      // onDropdownClose();
+      onDropdownClose();
     }
   };
 

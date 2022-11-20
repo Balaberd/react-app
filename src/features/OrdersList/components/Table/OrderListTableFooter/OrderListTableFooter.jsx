@@ -1,5 +1,5 @@
 import { getCheckedOrdersIDLength } from "features/OrdersList/model/selectors";
-import { React } from "react";
+import { React, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
@@ -25,6 +25,18 @@ function OrderListTableFooter({ ordersLength }) {
     </Button>
   );
 
+  const [isSelectorDropdownVisible, setIsSelectorDropdownVisible] =
+    useState(false);
+  const toggleSelectorDropdownVisibility = () => {
+    setIsSelectorDropdownVisible(!isSelectorDropdownVisible);
+  };
+
+  const [isApproverDropdownVisible, setIsApproverDropdownVisible] =
+    useState(false);
+  const toggleApproverDropdownVisibility = () => {
+    setIsApproverDropdownVisible(!isApproverDropdownVisible);
+  };
+
   return (
     <TableFooter className={styles._}>
       <div
@@ -35,17 +47,24 @@ function OrderListTableFooter({ ordersLength }) {
         <span>Выбрано записей: {numberOfCheckedOrders}</span>
 
         <Dropdown
+          externalVisibilityValue={isSelectorDropdownVisible}
+          externalVisibilitySetter={toggleSelectorDropdownVisibility}
           trigger={toggleElementChooseStatus}
           childrenClassName={styles.statusSelector}
         >
-          <StatusSelector />
+          <StatusSelector onDropdownClose={toggleSelectorDropdownVisibility} />
         </Dropdown>
 
         <Dropdown
+          externalVisibilityValue={isApproverDropdownVisible}
+          externalVisibilitySetter={toggleApproverDropdownVisibility}
           trigger={toggleElementDeletion}
           childrenClassName={styles.deletionApprover}
         >
-          <DeletionApprover numberOfCheckedOrders={numberOfCheckedOrders} />
+          <DeletionApprover
+            onDropdownClose={toggleApproverDropdownVisibility}
+            numberOfCheckedOrders={numberOfCheckedOrders}
+          />
         </Dropdown>
       </div>
 

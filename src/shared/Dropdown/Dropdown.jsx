@@ -12,6 +12,7 @@ const mixHandlers = (handler1, handler2) => () => {
 function Dropdown({
   trigger,
   children,
+  triggerClassName,
   childrenClassName,
   triggerClassNameWithActiveTrigger,
   externalVisibilityValue = null,
@@ -32,7 +33,9 @@ function Dropdown({
   const mixedHandlers = mixHandlers(toggleDropdown, trigger.props.onClick);
   const TriggerElement = React.cloneElement(trigger, {
     onClick: mixedHandlers,
-    className: cn({ [triggerClassNameWithActiveTrigger]: visibility }),
+    className: cn(triggerClassName, {
+      [triggerClassNameWithActiveTrigger]: visibility,
+    }),
   });
 
   return (

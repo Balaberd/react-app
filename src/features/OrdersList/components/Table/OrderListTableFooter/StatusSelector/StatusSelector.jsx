@@ -1,20 +1,24 @@
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
-import { changeOrders } from "features/OrdersList/model/orders/ordersSlice";
+import {
+  changeOrders,
+  resetCheckedOrders,
+} from "features/OrdersList/model/orders/ordersSlice";
 import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./StatusSelector.module.css";
 
-function StatusSelector() {
+function StatusSelector({ onDropdownClose }) {
   const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
 
   const checkedOrders = useSelector(getCheckedOrdersID);
 
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line no-unused-vars
   const handleChangeOrdersStatuses = (status) => {
     dispatch(changeOrders({ newStatus: status, checkedOrders }));
+    dispatch(resetCheckedOrders());
+    onDropdownClose();
   };
 
   return (

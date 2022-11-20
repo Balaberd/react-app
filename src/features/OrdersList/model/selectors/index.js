@@ -1,69 +1,63 @@
-import { getObjectDate } from "features/OrdersList/lib/getObjectDate";
+/* eslint-disable no-continue */
 import sortByKey from "features/OrdersList/lib/sortByKey";
 
-export const getCheckedStatuses = (state) => state.filters.checkedStatuses;
+export const getchoosedStatuses = (state) => state.filters.choosedStatuses;
 export const getSearchbarValue = (state) => state.filters.searchbar;
-export const getCheckedOrdersId = (state) => state.filters.checkedOrdersId;
-export const getCheckedOrdersIdLength = (state) =>
-  state.filters.checkedOrdersId.length;
+export const getCheckedOrdersID = (state) => state.orders.checkedOrdersID;
+export const getCheckedOrdersIDLength = (state) =>
+  state.orders.checkedOrdersID.length;
 
 export const getFiltredOrdersByPageAndAllOrdersLength = (state) => {
   const {
     searchbar,
     minDate,
     maxDate,
-    checkedStatuses,
+    choosedStatuses,
     minSum,
     maxSum,
-    isAdditionalFiltersActive,
     activeSorter,
     isAscending,
     pageLimit,
     currentPage,
   } = state.filters;
 
-  let filtredOrders = [...state.orders.allOrders];
+  const { allOrders } = state.orders;
 
-  if (searchbar) {
-    filtredOrders = filtredOrders.filter(
-      (order) =>
-        `${order.lastName} ${order.firstName} ${order.secondName}`.includes(
-          searchbar
-        ) || String(order.index).includes(searchbar)
-    );
+  const filteredOrders = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < allOrders.length; i++) {
+    if (minDate && new Date(allOrders[i].date) < new Date(minDate)) {
+      continue;
+    } else if (maxDate && new Date(allOrders[i].date) > new Date(maxDate)) {
+      continue;
+    } else if (
+      choosedStatuses.length > 0 &&
+      !choosedStatuses.includes(allOrders[i].status)
+    ) {
+      continue;
+    } else if (minSum && allOrders[i].sum < minSum) {
+      continue;
+    } else if (maxSum && allOrders[i].sum > maxSum) {
+      continue;
+    } else if (searchbar) {
+      if (
+        !(
+          `${allOrders[i].index}`.includes(searchbar) ||
+          allOrders[i].customerName.includes(searchbar)
+        )
+      )
+        continue;
+    }
+    filteredOrders.push(allOrders[i]);
   }
 
-  if (isAdditionalFiltersActive) {
-    if (minSum) {
-      filtredOrders = filtredOrders.filter((order) => order.sum > minSum);
-    }
-    if (maxSum) {
-      filtredOrders = filtredOrders.filter((order) => order.sum < maxSum);
-    }
-
-    if (minDate) {
-      filtredOrders = filtredOrders.filter(
-        (order) => new Date(order.date) > getObjectDate(minDate)
-      );
-    }
-    if (maxDate) {
-      filtredOrders = filtredOrders.filter(
-        (order) => new Date(order.date) < getObjectDate(maxDate)
-      );
-    }
-
-    if (checkedStatuses.length > 0) {
-      filtredOrders = filtredOrders.filter((order) =>
-        checkedStatuses.includes(order.status)
-      );
-    }
-  }
-
-  const filtredAndSorted = sortByKey(activeSorter, isAscending, filtredOrders);
-
+  const filtredAndSorted = sortByKey(activeSorter, isAscending, filteredOrders);
   const ordersByPage = filtredAndSorted.filter(
-    (order, index) =>
-      index >= pageLimit * (currentPage - 1) && index <= pageLimit * currentPage
+    (_, index) =>
+      index >= pageLimit * (currentPage - 1) && index < pageLimit * currentPage
   );
-  return [ordersByPage, filtredAndSorted.length];
+  return {
+    ordersByPage,
+    filtredAndSortedOrdersLength: filtredAndSorted.length,
+  };
 };

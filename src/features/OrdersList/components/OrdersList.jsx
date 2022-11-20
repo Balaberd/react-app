@@ -9,14 +9,9 @@ import OrderListTableFooter from "./Table/OrderListTableFooter/OrderListTableFoo
 import OrderListTableHeader from "./Table/OrderListTableHeader/OrderListTableHeader";
 import ordersMock from "../lib/ordersMock";
 import styles from "./OrdersList.module.css";
-import { getOrders } from "../model/orders/ordersSlice";
-import {
-  getCheckedOrdersId,
-  getFiltredOrdersByPageAndAllOrdersLength,
-} from "../model/selectors";
-import { setOrderCheck } from "../model/filters/filtersSlice";
+import { getOrders, toggleOrderCheck } from "../model/orders/ordersSlice";
+import { getFiltredOrdersByPageAndAllOrdersLength } from "../model/selectors";
 import ModalForm from "./Form/ModalForm";
-import { openModal } from "../model/modal/modalSlice";
 
 function OrdersList() {
   const dispatch = useDispatch();
@@ -27,38 +22,31 @@ function OrdersList() {
     }, 500);
   }, []);
 
-  const checkedOrders = useSelector(getCheckedOrdersId);
   const handleChangeOrderCheck = (id) => {
-    dispatch(setOrderCheck(id));
+    dispatch(toggleOrderCheck(id));
   };
 
-  const [filtredOrders, ordersLength] = useSelector(
+  const { ordersByPage, filtredAndSortedOrdersLength } = useSelector(
     getFiltredOrdersByPageAndAllOrdersLength
   );
-
-  const handleOpenModal = (order) => {
-    dispatch(openModal(order));
-  };
 
   return (
     <div className={styles._}>
       <Header />
       <Filter />
       <Table>
-        <OrderListTableHeader allOrdersOnPage={filtredOrders} />
+        <OrderListTableHeader allOrdersOnPage={ordersByPage} />
         <TableBody>
-          {filtredOrders.map((order) => (
+          {ordersByPage.map((order) => (
             <OrderListTableBodyItem
               key={order.id}
-              isChecked={checkedOrders.includes(order.id)}
               onChangeCheck={() => handleChangeOrderCheck(order.id)}
-              onClick={() => handleOpenModal(order)}
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...order}
             />
           ))}
         </TableBody>
-        <OrderListTableFooter ordersLength={ordersLength} />
+        <OrderListTableFooter ordersLength={filtredAndSortedOrdersLength} />
       </Table>
       <ModalForm />
     </div>

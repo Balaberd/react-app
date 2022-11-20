@@ -31,3 +31,7 @@
   width: 10rem;
   height: 13rem;
 }
+
+.unvisible {
+  visibility: hidden;
+}

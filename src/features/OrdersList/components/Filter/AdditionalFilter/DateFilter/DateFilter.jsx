@@ -1,44 +1,32 @@
-import {
-  changeMinDate,
-  changeMaxDate,
-} from "features/OrdersList/model/filters/filtersSlice";
+import getPrettyDate from "features/OrdersList/lib/getPrettyDate";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Input from "shared/Input/Input";
 import styles from "./DateFilter.module.css";
 
-function DateFilter() {
-  const { minDate, maxDate } = useSelector((state) => state.filters);
-
-  const dispatch = useDispatch();
-
-  const handleChangeMinDate = ({ target: { value } }) => {
-    dispatch(changeMinDate(value));
-  };
-  const handleChangeMaxDate = ({ target: { value } }) => {
-    dispatch(changeMaxDate(value));
-  };
-  const handleResetMinDate = () => {
-    dispatch(changeMinDate(""));
-  };
-  const handleResetMaxDate = () => {
-    dispatch(changeMaxDate(""));
-  };
-
+function DateFilter({
+  minDate,
+  onMinDateChange,
+  maxDate,
+  onMaxDateChange,
+  onResetMinDate,
+  onResetMaxDate,
+}) {
   return (
     <div className={styles._}>
       <Input
-        value={minDate}
-        onChange={handleChangeMinDate}
-        onReset={handleResetMinDate}
+        value={getPrettyDate(minDate.value)}
+        isIncorrect={!minDate.isValid}
+        onKeyDown={onMinDateChange}
+        onReset={onResetMinDate}
         label="Дата оформления"
         placeholder="dd.mm.yyyy"
         prefix="c"
       />
       <Input
-        value={maxDate}
-        onChange={handleChangeMaxDate}
-        onReset={handleResetMaxDate}
+        value={getPrettyDate(maxDate.value)}
+        isIncorrect={!maxDate.isValid}
+        onKeyDown={onMaxDateChange}
+        onReset={onResetMaxDate}
         placeholder="dd.mm.yyyy"
         prefix="по"
       />

@@ -14,23 +14,31 @@ function Dropdown({
   children,
   childrenClassName,
   triggerClassNameWithActiveTrigger,
+  externalVisibilityValue = null,
+  externalVisibilitySetter = () => {},
 }) {
   const [isVisible, setIsVisible] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsVisible(!isVisible);
-  };
+  const toggleDropdown =
+    externalVisibilityValue === null
+      ? () => {
+          setIsVisible(!isVisible);
+        }
+      : externalVisibilitySetter;
+
+  const visibility =
+    externalVisibilityValue === null ? isVisible : externalVisibilityValue;
 
   const mixedHandlers = mixHandlers(toggleDropdown, trigger.props.onClick);
   const TriggerElement = React.cloneElement(trigger, {
     onClick: mixedHandlers,
-    className: cn({ [triggerClassNameWithActiveTrigger]: isVisible }),
+    className: cn({ [triggerClassNameWithActiveTrigger]: visibility }),
   });
 
   return (
     <div className={styles.trigger}>
       {TriggerElement}
-      {isVisible && (
+      {visibility && (
         <div className={cn(childrenClassName, styles.overlay)}>{children}</div>
       )}
     </div>

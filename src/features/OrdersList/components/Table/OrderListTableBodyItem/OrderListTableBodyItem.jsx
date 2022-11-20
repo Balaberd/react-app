@@ -5,14 +5,15 @@ import cn from "classnames";
 import TableRow from "shared/Table/TableRow/TableRow";
 import TableCell from "shared/Table/TableCell/TableCell";
 import Checkbox from "shared/Chechbox/Checkbox";
-import { getFormatDate } from "features/OrdersList/lib/getObjectDate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getFormatedDate } from "features/OrdersList/lib/date";
+import { openModal } from "features/OrdersList/model/modal/modalSlice";
+import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
 import StatusCell from "./StatusCell/StatusCell";
 import rowStyles from "../RowMarkup.module.css";
 import styles from "./OrderListTableBodyItem.module.css";
 
 function OrderListTableBodyItem({
-  isChecked,
   onChangeCheck,
   id,
   index,
@@ -21,10 +22,17 @@ function OrderListTableBodyItem({
   numberOfPositions,
   sum,
   customerName,
-  onClick,
 }) {
   const RUB_SYMBOL = <span>&#8381;</span>;
   const checkedModalFormOrderId = useSelector((state) => state.modal.orderId);
+  const checkedOrders = useSelector(getCheckedOrdersID);
+
+  const dispatch = useDispatch();
+  const handleOpenModal = (order) => {
+    dispatch(openModal(order));
+  };
+  const isChecked = checkedOrders.includes(id);
+
   return (
     <TableRow
       className={cn(styles.bodyRow, {
@@ -35,10 +43,17 @@ function OrderListTableBodyItem({
         <Checkbox checked={isChecked} onChange={onChangeCheck} />
       </TableCell>
 
-      <div className={styles.withoutCheckbox} onClick={onClick}>
+      <div
+        className={styles.withoutCheckbox}
+        onClick={() =>
+          handleOpenModal({ id, date, index, status, customerName })
+        }
+      >
         <TableCell className={rowStyles.index}>{index}</TableCell>
 
-        <TableCell className={rowStyles.date}>{getFormatDate(date)}</TableCell>
+        <TableCell className={rowStyles.date}>
+          {getFormatedDate(date)}
+        </TableCell>
 
         <TableCell className={rowStyles.status}>
           <StatusCell status={status} />

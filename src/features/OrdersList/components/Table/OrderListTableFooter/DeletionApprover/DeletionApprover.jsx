@@ -1,19 +1,14 @@
-import {
-  changeCurrentPage,
-  resetAllCheckOrders,
-} from "features/OrdersList/model/filters/filtersSlice";
-import { deleteOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
+import { deleteCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "shared/Button/Button";
 
 function DeletionApprover({ numberOfCheckedOrders }) {
-  const checkedOrders = useSelector((state) => state.filters.checkedOrdersId);
   const dispatch = useDispatch();
 
   const handleDeleteChoosedOrders = () => {
-    dispatch(deleteOrders(checkedOrders));
-    dispatch(resetAllCheckOrders());
+    dispatch(deleteCheckedOrders());
     dispatch(changeCurrentPage(1));
   };
 

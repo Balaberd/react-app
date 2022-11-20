@@ -3,20 +3,17 @@ import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
-import { useSelector } from "react-redux";
-import { getCheckedStatuses } from "features/OrdersList/model/selectors";
 import StatusesSelector from "./StatusesSelector/StatusesSelector";
 import styles from "./StatusFilter.module.css";
 import dropdownStyles from "./StatusesSelector/StatusesSelector.module.css";
 
-function StatusFilter() {
+function StatusFilter({ choosedStatuses, onChangeChoosedStatus }) {
   const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
-  const checkedStatuses = useSelector(getCheckedStatuses);
 
   const statusesForInput =
-    checkedStatuses.length === 0 || checkedStatuses.length === statuses.length
+    choosedStatuses.length === 0 || choosedStatuses.length === statuses.length
       ? "Любой"
-      : checkedStatuses
+      : choosedStatuses
           .map((status) => STATUSES_NAMES_TRANSLATION[status])
           .join(", ");
 
@@ -28,7 +25,10 @@ function StatusFilter() {
       childrenClassName={dropdownStyles._}
       triggerClassNameWithActiveTrigger={styles.flipped}
     >
-      <StatusesSelector />
+      <StatusesSelector
+        choosedStatuses={choosedStatuses}
+        onChangeChoosedStatus={onChangeChoosedStatus}
+      />
     </Dropdown>
   );
 

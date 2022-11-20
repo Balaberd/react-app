@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
@@ -11,8 +9,8 @@ import {
 } from "features/OrdersList/model/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
-import { getFormatDate } from "features/OrdersList/lib/getObjectDate";
 import { changeOrder } from "features/OrdersList/model/orders/ordersSlice";
+import { getFormatedDate } from "features/OrdersList/lib/date";
 import styles from "./ModalForm.module.css";
 import OrderDetail from "./OrderDetail/OrderDetail";
 import StatusSelectorByModal from "./StatusSelectorByModal/StatusSelectorByModal";
@@ -66,7 +64,6 @@ function ModalForm() {
   return (
     <div className={styles._}>
       <div
-        onClick={handleCloseModal}
         className={cn(styles.modalBackground, {
           [styles.active]: isModalFormActive,
         })}
@@ -87,7 +84,7 @@ function ModalForm() {
         <div className={styles.body}>
           <Input
             disabled
-            value={getFormatDate(date)}
+            value={getFormatedDate(date)}
             label="Дата и время заказа"
           />
           <Input

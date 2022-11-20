@@ -8,11 +8,13 @@ import {
   resetAllFilters,
 } from "features/OrdersList/model/filters/filtersSlice";
 import { getSearchbarValue } from "features/OrdersList/model/selectors";
+import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
 import styles from "./MainFilter.module.css";
 
 function MainFilter({
   additionalFilterVisibility,
   handleToggleAdditionalFilter,
+  onResetAdditionalFilters,
 }) {
   const dispatch = useDispatch();
 
@@ -27,7 +29,9 @@ function MainFilter({
   };
 
   const handleResetAllFilters = () => {
+    dispatch(resetCheckedOrders());
     dispatch(resetAllFilters());
+    onResetAdditionalFilters();
   };
 
   return (

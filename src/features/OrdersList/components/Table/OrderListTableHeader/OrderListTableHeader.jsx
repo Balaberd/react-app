@@ -10,15 +10,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveSorter,
   changeSorterDirection,
-  checkAllOrdersOnPage,
 } from "features/OrdersList/model/filters/filtersSlice";
+import { checkAllOrdersOnPage } from "features/OrdersList/model/orders/ordersSlice";
+import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
 import styles from "./OrderListTableHeader.module.css";
 import rowStyles from "../RowMarkup.module.css";
 
 function OrderListTableHeader({ allOrdersOnPage }) {
-  const { activeSorter, isAscending, checkedOrdersId } = useSelector(
-    (state) => state.filters
-  );
+  const { activeSorter, isAscending } = useSelector((state) => state.filters);
+
+  const checkedOrdersID = useSelector(getCheckedOrdersID);
 
   const dispatch = useDispatch();
 
@@ -32,7 +33,7 @@ function OrderListTableHeader({ allOrdersOnPage }) {
 
   const allOrdersIdOnPage = allOrdersOnPage.map((el) => el.id);
 
-  const isAllOrdersChecked = allOrdersOnPage.length === checkedOrdersId.length;
+  const isAllOrdersChecked = allOrdersOnPage.length === checkedOrdersID.length;
 
   const handleCheckAllOrdersOnPage = () => {
     if (isAllOrdersChecked) {
@@ -47,7 +48,7 @@ function OrderListTableHeader({ allOrdersOnPage }) {
       <TableRow>
         <TableCell className={rowStyles.checkbox}>
           <Checkbox
-            checked={isAllOrdersChecked}
+            checked={isAllOrdersChecked && checkedOrdersID.length > 0}
             onChange={() => handleCheckAllOrdersOnPage()}
           />
         </TableCell>

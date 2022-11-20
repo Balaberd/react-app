@@ -1,5 +1,6 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
-import React from "react";
+import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
@@ -51,8 +52,10 @@ function Pagination({ ordersLength }) {
 
   const dispatch = useDispatch();
   const handleChangePage = (pageNumber) => {
-    if (pageNumber !== "..." && pageNumber !== currentPage)
+    if (pageNumber !== "..." && pageNumber !== currentPage) {
+      dispatch(resetCheckedOrders());
       dispatch(changeCurrentPage(pageNumber));
+    }
   };
 
   const buttons = createPaginationElement(
@@ -62,11 +65,26 @@ function Pagination({ ordersLength }) {
     handleChangePage
   );
 
+  const [externalDropdownSetter, setExternalDropdownSetter] = useState(true);
+  const handleToggleDropdown = () => {
+    setExternalDropdownSetter(!externalDropdownSetter);
+  };
+
   return (
     <div className={styles._}>
       <div className={styles.wrapper}>{buttons}</div>
-      <Dropdown trigger={dropdownTrigger} childrenClassName={styles.dropdown}>
-        <ChoosePage ordersLength={ordersLength} maxPage={maxPage} />
+      <Dropdown
+        externalVisibilityValue={externalDropdownSetter}
+        externalVisibilitySetter={handleToggleDropdown}
+        trigger={dropdownTrigger}
+        childrenClassName={styles.dropdown}
+        dropdownVisibility={externalDropdownSetter}
+      >
+        <ChoosePage
+          ordersLength={ordersLength}
+          maxPage={maxPage}
+          onDropdownClose={handleToggleDropdown}
+        />
       </Dropdown>
     </div>
   );

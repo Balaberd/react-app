@@ -6,8 +6,23 @@ export const getSearchbarValue = (state) => state.filters.searchbar;
 export const getCheckedOrdersID = (state) => state.orders.checkedOrdersID;
 export const getCheckedOrdersIDLength = (state) =>
   state.orders.checkedOrdersID.length;
+export const isAdditionalFiltersActive = (state) => {
+  const { minDate, maxDate, choosedStatuses, minSum, maxSum } = state.filters;
+  if (
+    !!minDate ||
+    minDate === "Invalid Date" ||
+    !!maxDate ||
+    maxDate === "Invalid Date" ||
+    choosedStatuses.length !== 0 ||
+    !!minSum ||
+    !!maxSum
+  ) {
+    return false;
+  }
+  return true;
+};
 
-export const getFiltredOrdersByPageAndAllOrdersLength = (state) => {
+export const getFilteredOrdersByPageAndAllOrdersLength = (state) => {
   const {
     searchbar,
     minDate,
@@ -51,13 +66,17 @@ export const getFiltredOrdersByPageAndAllOrdersLength = (state) => {
     filteredOrders.push(allOrders[i]);
   }
 
-  const filtredAndSorted = sortByKey(activeSorter, isAscending, filteredOrders);
-  const ordersByPage = filtredAndSorted.filter(
+  const filteredAndSorted = sortByKey(
+    activeSorter,
+    isAscending,
+    filteredOrders
+  );
+  const ordersByPage = filteredAndSorted.filter(
     (_, index) =>
       index >= pageLimit * (currentPage - 1) && index < pageLimit * currentPage
   );
   return {
     ordersByPage,
-    filtredAndSortedOrdersLength: filtredAndSorted.length,
+    filteredAndSortedOrdersLength: filteredAndSorted.length,
   };
 };

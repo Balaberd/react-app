@@ -9,8 +9,8 @@ import OrderListTableFooter from "./Table/OrderListTableFooter/OrderListTableFoo
 import OrderListTableHeader from "./Table/OrderListTableHeader/OrderListTableHeader";
 import styles from "./OrdersList.module.css";
 import { toggleOrderCheck } from "../model/orders/ordersSlice";
-import { getFiltredOrdersByPageAndAllOrdersLength } from "../model/selectors";
 import ModalForm from "./Form/ModalForm";
+import { getFilteredOrdersByPageAndAllOrdersLength } from "../model/selectors";
 
 function OrdersList() {
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ function OrdersList() {
     dispatch(toggleOrderCheck(id));
   };
 
-  const { ordersByPage, filtredAndSortedOrdersLength } = useSelector(
-    getFiltredOrdersByPageAndAllOrdersLength
+  const { ordersByPage, filteredAndSortedOrdersLength } = useSelector(
+    getFilteredOrdersByPageAndAllOrdersLength
   );
 
   return (
@@ -39,7 +39,10 @@ function OrdersList() {
             />
           ))}
         </TableBody>
-        <OrderListTableFooter ordersLength={filtredAndSortedOrdersLength} />
+        <OrderListTableFooter
+          filteredOrdersLength={filteredAndSortedOrdersLength}
+          ordersOnPageLength={ordersByPage.length}
+        />
       </Table>
       <ModalForm />
     </div>

@@ -11,7 +11,7 @@ import {
   changeActiveSorter,
   changeSorterDirection,
 } from "features/OrdersList/model/filters/filtersSlice";
-import { checkAllOrdersOnPage } from "features/OrdersList/model/orders/ordersSlice";
+import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
 import styles from "./OrderListTableHeader.module.css";
 import rowStyles from "../RowMarkup.module.css";
@@ -35,11 +35,11 @@ function OrderListTableHeader({ allOrdersOnPage }) {
 
   const isAllOrdersChecked = allOrdersOnPage.length === checkedOrdersID.length;
 
-  const handleCheckAllOrdersOnPage = () => {
+  const handlecheckOrders = () => {
     if (isAllOrdersChecked) {
-      dispatch(checkAllOrdersOnPage([]));
+      dispatch(checkOrders([]));
     } else {
-      dispatch(checkAllOrdersOnPage(allOrdersIdOnPage));
+      dispatch(checkOrders(allOrdersIdOnPage));
     }
   };
 
@@ -49,7 +49,7 @@ function OrderListTableHeader({ allOrdersOnPage }) {
         <TableCell className={rowStyles.checkbox}>
           <Checkbox
             checked={isAllOrdersChecked && checkedOrdersID.length > 0}
-            onChange={() => handleCheckAllOrdersOnPage()}
+            onChange={() => handlecheckOrders()}
           />
         </TableCell>
 

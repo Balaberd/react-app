@@ -12,8 +12,6 @@ const initialState = {
   activeSorter: "date",
   isAscending: true,
 
-  // checkedOrdersId: [],
-
   pageLimit: 30,
   currentPage: 1,
 };

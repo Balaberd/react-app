@@ -1,5 +1,5 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
-import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
@@ -58,7 +58,7 @@ function Pagination({ ordersLength }) {
   const dispatch = useDispatch();
   const handleChangePage = (pageNumber) => {
     if (pageNumber !== "..." && pageNumber !== currentPage) {
-      dispatch(resetCheckedOrders());
+      dispatch(checkOrders([]));
       dispatch(changeCurrentPage(pageNumber));
     }
   };

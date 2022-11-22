@@ -1,5 +1,5 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
-import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "shared/Input/Input";
@@ -29,7 +29,7 @@ function ChoosePage({ maxPage, onDropdownClose }) {
       pageNumber <= maxPage &&
       pageNumber > 0
     ) {
-      dispatch(resetCheckedOrders());
+      dispatch(checkOrders([]));
       dispatch(changeCurrentPage(Number(pageNumber)));
       onDropdownClose();
     }

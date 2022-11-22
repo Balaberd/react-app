@@ -1,7 +1,7 @@
 import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
 import {
-  changeOrders,
-  resetCheckedOrders,
+  changeStatusOrders,
+  checkOrders,
 } from "features/OrdersList/model/orders/ordersSlice";
 import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
 import React from "react";
@@ -16,8 +16,8 @@ function StatusSelector() {
   const dispatch = useDispatch();
 
   const handleChangeOrdersStatuses = (status) => {
-    dispatch(changeOrders({ newStatus: status, checkedOrders }));
-    setTimeout(() => dispatch(resetCheckedOrders()), 300);
+    dispatch(changeStatusOrders({ newStatus: status, checkedOrders }));
+    setTimeout(() => dispatch(checkOrders([])), 300);
   };
 
   return (

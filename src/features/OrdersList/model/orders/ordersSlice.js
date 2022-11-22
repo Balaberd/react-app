@@ -25,14 +25,12 @@ const ordersSlice = createSlice({
         checkedOrdersID: [...state.checkedOrdersID, action.payload],
       };
     },
-    resetCheckedOrders(state) {
-      return { ...state, checkedOrdersID: [] };
-    },
-    checkAllOrdersOnPage(state, action) {
+
+    checkOrders(state, action) {
       return { ...state, checkedOrdersID: action.payload };
     },
 
-    changeOrders(state, action) {
+    changeStatusOrders(state, action) {
       const newOrders = state.allOrders.map((order) =>
         action.payload.checkedOrders.includes(order.id)
           ? { ...order, status: action.payload.newStatus }
@@ -65,11 +63,10 @@ const ordersSlice = createSlice({
 });
 
 export const {
-  changeOrders,
+  changeStatusOrders,
   deleteCheckedOrders,
   changeOrder,
   toggleOrderCheck,
-  resetCheckedOrders,
-  checkAllOrdersOnPage,
+  checkOrders,
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

@@ -1,9 +1,12 @@
 import { React, useState } from "react";
 import Button from "shared/Button/Button";
 import { useDispatch } from "react-redux";
-import { getAdditionalFilterValues } from "features/OrdersList/model/filters/filtersSlice";
+import {
+  changeCurrentPage,
+  getAdditionalFilterValues,
+} from "features/OrdersList/model/filters/filtersSlice";
 import { getDateByFilters } from "features/OrdersList/lib/date";
-import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import styles from "./Filter.module.css";
 import MainFilter from "./MainFilter/MainFilter";
 import AdditionalFilter from "./AdditionalFilter/AdditionalFilter";
@@ -90,7 +93,7 @@ function Filter() {
     setMinDate({ ...minDate, isValid: true });
     setMaxDate({ ...maxDate, isValid: true });
 
-    dispatch(resetCheckedOrders());
+    dispatch(checkOrders([]));
     dispatch(
       getAdditionalFilterValues({
         minDate: formatedMinDate,
@@ -100,6 +103,7 @@ function Filter() {
         maxSum,
       })
     );
+    dispatch(changeCurrentPage(1));
   };
 
   return (

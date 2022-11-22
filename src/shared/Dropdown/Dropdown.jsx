@@ -8,6 +8,7 @@ const mixHandlers = (handler1, handler2) => () => {
     handler2();
   }
 };
+
 const useClickOutside = (ref, handler) => {
   useEffect(() => {
     const listener = (event) => {
@@ -43,6 +44,7 @@ function Dropdown({
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const mixedHandler = mixHandlers(toggleDropdown, trigger.props.onClick);
+
   const triggerElement = cloneElement(trigger, {
     onClick: mixedHandler,
     className: cn(triggerClassName, {

@@ -1,4 +1,5 @@
 import React from "react";
+import cn from "classnames";
 import { ReactComponent as IconSun } from "./sun.svg";
 import { ReactComponent as IconFilter } from "./filter.svg";
 import { ReactComponent as IconLocked } from "./locked.svg";
@@ -13,6 +14,7 @@ import { ReactComponent as IconAbort } from "./abort.svg";
 import { ReactComponent as IconCheck } from "./checkmark.svg";
 import { ReactComponent as IconPencil } from "./pencil.svg";
 import { ReactComponent as IconBin } from "./bin.svg";
+import styles from "./Icon.module.css";
 
 const ICON_MAP = {
   sun: IconSun,
@@ -35,7 +37,7 @@ function Icon({ type, className, ...props }) {
   const Component = ICON_MAP[type];
   return Component ? (
     <Component
-      className={className}
+      className={cn(styles._, className)}
       width="1rem"
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}

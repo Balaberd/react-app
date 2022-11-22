@@ -7,8 +7,12 @@ import {
   changeSearchbar,
   resetAllFilters,
 } from "features/OrdersList/model/filters/filtersSlice";
-import { getSearchbarValue } from "features/OrdersList/model/selectors";
-import { resetCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
+import {
+  getSearchbarValue,
+  isAdditionalFiltersActive,
+} from "features/OrdersList/model/selectors";
+import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
+import cn from "classnames";
 import styles from "./MainFilter.module.css";
 
 function MainFilter({
@@ -29,10 +33,12 @@ function MainFilter({
   };
 
   const handleResetAllFilters = () => {
-    dispatch(resetCheckedOrders());
+    dispatch(checkOrders([]));
     dispatch(resetAllFilters());
     onResetAdditionalFilters();
   };
+
+  const isActive = useSelector(isAdditionalFiltersActive);
 
   return (
     <div className={styles._}>
@@ -53,7 +59,12 @@ function MainFilter({
         >
           Фильтры
         </Button>
-        <Button onClick={handleResetAllFilters}>Сбросить фильтры</Button>
+        <Button
+          onClick={handleResetAllFilters}
+          className={cn(styles.resetFilters, { [styles.inactive]: isActive })}
+        >
+          Сбросить фильтры
+        </Button>
       </div>
       <div>
         <Button icon="refresh">Загрузка</Button>

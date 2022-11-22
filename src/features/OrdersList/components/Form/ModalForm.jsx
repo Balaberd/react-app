@@ -51,7 +51,7 @@ function ModalForm() {
 
   const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
   const handleChangeOrder = () => {
-    if (isEnteredCodeCorrect) {
+    if (isEnteredCodeCorrect && customerName) {
       dispatch(changeOrder({ id: orderId, customerName, status }));
       handleCloseModal();
     } else {
@@ -101,6 +101,7 @@ function ModalForm() {
           />
           <Input
             value={customerName}
+            isIncorrect={customerName !== null && customerName.length === 0}
             onChange={createHandleValueChanger("customerName")}
             onReset={createHandleValueReset("customerName")}
             label="ФИО покупателя"

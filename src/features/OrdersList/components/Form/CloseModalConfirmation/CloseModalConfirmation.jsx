@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "shared/Button/Button";
 
-function DropdownCloseApprover({ onDropdownClose, onModalClose }) {
+function CloseModalConfirmation({ onModalClose }) {
   return (
     <>
       Есть несохраненные изменения
@@ -12,7 +12,7 @@ function DropdownCloseApprover({ onDropdownClose, onModalClose }) {
         isFullWidth
         size="short"
         theme="primary"
-        onClick={onDropdownClose}
+        className="dropdownCloser"
       >
         Остаться
       </Button>
@@ -20,4 +20,4 @@ function DropdownCloseApprover({ onDropdownClose, onModalClose }) {
   );
 }
 
-export default DropdownCloseApprover;
+export default CloseModalConfirmation;

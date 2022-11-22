@@ -4,6 +4,7 @@ import Input from "shared/Input/Input";
 import cn from "classnames";
 import { React } from "react";
 import {
+  changeErrorStatus,
   changeModalValue,
   closeModal,
 } from "features/OrdersList/model/modal/modalSlice";
@@ -15,8 +16,8 @@ import styles from "./ModalForm.module.css";
 import OrderDetail from "./OrderDetail/OrderDetail";
 import StatusSelectorByModal from "./StatusSelectorByModal/StatusSelectorByModal";
 import dropdownSelectorStyles from "./StatusSelectorByModal/StatusSelectorByModal.module.css";
-import DropdownCloseApprover from "./DropdownCloseApprover/DropdownCloseApprover";
-import dropdownCloseApproverStyle from "./DropdownCloseApprover/DropdownCloseApprover.module.css";
+import CloseModalConfirmation from "./CloseModalConfirmation/CloseModalConfirmation";
+import CloseModalConfirmationStyle from "./CloseModalConfirmation/CloseModalConfirmation.module.css";
 
 const getCurrentOrderByID = (id) => (state) =>
   state.orders.allOrders.filter((order) => order.id === id)[0];
@@ -31,6 +32,7 @@ function ModalForm() {
     status,
     confirmationСodeValue,
     confirmationСode,
+    haveErrorWhileSaving,
   } = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
@@ -52,6 +54,8 @@ function ModalForm() {
     if (isEnteredCodeCorrect) {
       dispatch(changeOrder({ id: orderId, customerName, status }));
       handleCloseModal();
+    } else {
+      dispatch(changeErrorStatus());
     }
   };
 
@@ -60,8 +64,7 @@ function ModalForm() {
     originalOrder?.customerName === customerName &&
     originalOrder?.status === status;
 
-  // eslint-disable-next-line no-unused-vars
-  const handleAOpenApproveOrCloseModal = () => {
+  const handleAOpenApproverOrCloseModal = () => {
     if (isWithoutChanges) handleCloseModal();
   };
 
@@ -83,11 +86,11 @@ function ModalForm() {
           <Dropdown
             triggerClassName={styles.button}
             trigger={
-              <Button icon="xLarge" onClick={handleAOpenApproveOrCloseModal} />
+              <Button icon="xLarge" onClick={handleAOpenApproverOrCloseModal} />
             }
-            childrenClassName={dropdownCloseApproverStyle._}
+            childrenClassName={CloseModalConfirmationStyle._}
           >
-            <DropdownCloseApprover onModalClose={handleCloseModal} />
+            <CloseModalConfirmation onModalClose={handleCloseModal} />
           </Dropdown>
         </div>
         <div className={styles.body}>
@@ -125,14 +128,12 @@ function ModalForm() {
             value={confirmationСodeValue}
             onChange={createHandleValueChanger("confirmationСodeValue")}
             onReset={createHandleValueReset("confirmationСodeValue")}
-            isIncorrect={
-              !isEnteredCodeCorrect && confirmationСodeValue.length > 0
-            }
+            isIncorrect={haveErrorWhileSaving}
           />
         </div>
 
         <div className={styles.footer}>
-          Ошибка или индикатор загрузки
+          {haveErrorWhileSaving && "Ошибка или индикатор загрузки"}
           <Button icon="check" theme="primary" onClick={handleChangeOrder}>
             Сохранить
           </Button>

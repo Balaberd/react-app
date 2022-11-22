@@ -11,6 +11,8 @@ const initialState = {
 
   confirmationСodeValue: "",
   confirmationСode: "123",
+
+  haveErrorWhileSaving: false,
 };
 
 const modalSlice = createSlice({
@@ -32,10 +34,18 @@ const modalSlice = createSlice({
       return { ...initialState };
     },
     changeModalValue(state, action) {
-      return { ...state, [action.payload.valueName]: action.payload.newValue };
+      return {
+        ...state,
+        haveErrorWhileSaving: false,
+        [action.payload.valueName]: action.payload.newValue,
+      };
+    },
+    changeErrorStatus(state) {
+      return { ...state, haveErrorWhileSaving: true };
     },
   },
 });
 
-export const { openModal, closeModal, changeModalValue } = modalSlice.actions;
+export const { openModal, closeModal, changeModalValue, changeErrorStatus } =
+  modalSlice.actions;
 export default modalSlice.reducer;

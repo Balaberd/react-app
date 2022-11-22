@@ -1,7 +1,9 @@
+import ordersMock from "features/OrdersList/lib/ordersMock";
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-  allOrders: [],
+  allOrders: ordersMock,
   checkedOrdersID: [],
 };
 
@@ -9,10 +11,6 @@ const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    getOrders(state, action) {
-      return { ...state, allOrders: action.payload };
-    },
-
     toggleOrderCheck(state, action) {
       if (state.checkedOrdersID.includes(action.payload)) {
         return {
@@ -67,7 +65,6 @@ const ordersSlice = createSlice({
 });
 
 export const {
-  getOrders,
   changeOrders,
   deleteCheckedOrders,
   changeOrder,

@@ -2,7 +2,7 @@ import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
 import cn from "classnames";
-import { React, useState } from "react";
+import { React } from "react";
 import {
   changeModalValue,
   closeModal,
@@ -18,18 +18,10 @@ import dropdownSelectorStyles from "./StatusSelectorByModal/StatusSelectorByModa
 import DropdownCloseApprover from "./DropdownCloseApprover/DropdownCloseApprover";
 import dropdownCloseApproverStyle from "./DropdownCloseApprover/DropdownCloseApprover.module.css";
 
-function ModalForm() {
-  const [isSelectorDropdownVisible, setIsSelectorDropdownVisible] =
-    useState(false);
-  const handleToggleSelectorVisibility = () => {
-    setIsSelectorDropdownVisible(!isSelectorDropdownVisible);
-  };
-  const [isApproveDropdownVisible, setIsApproveDropdownVisible] =
-    useState(false);
-  const handleToggleApproverVisibility = () => {
-    setIsApproveDropdownVisible(!isApproveDropdownVisible);
-  };
+const getCurrentOrderByID = (id) => (state) =>
+  state.orders.allOrders.filter((order) => order.id === id)[0];
 
+function ModalForm() {
   const {
     isModalFormActive,
     orderId,
@@ -53,7 +45,6 @@ function ModalForm() {
 
   const handleCloseModal = () => {
     dispatch(closeModal());
-    setIsApproveDropdownVisible(false);
   };
 
   const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
@@ -64,36 +55,15 @@ function ModalForm() {
     }
   };
 
-  const triggerSelectorElement = <Button icon="arrow" />;
+  const originalOrder = useSelector(getCurrentOrderByID(orderId));
+  const isWithoutChanges =
+    originalOrder?.customerName === customerName &&
+    originalOrder?.status === status;
 
-  const dropdownSelectorElement = (
-    <Dropdown
-      externalVisibilityValue={isSelectorDropdownVisible}
-      externalVisibilitySetter={handleToggleSelectorVisibility}
-      trigger={triggerSelectorElement}
-      childrenClassName={dropdownSelectorStyles._}
-      triggerClassNameWithActiveTrigger={styles.flipped}
-    >
-      <StatusSelectorByModal onDropdownClose={handleToggleSelectorVisibility} />
-    </Dropdown>
-  );
-
-  const triggerApproveChangeElement = <Button icon="xLarge" />;
-
-  const dropdownApproveChangeElement = (
-    <Dropdown
-      externalVisibilityValue={isApproveDropdownVisible}
-      externalVisibilitySetter={handleToggleApproverVisibility}
-      triggerClassName={styles.button}
-      trigger={triggerApproveChangeElement}
-      childrenClassName={dropdownCloseApproverStyle._}
-    >
-      <DropdownCloseApprover
-        onDropdownClose={handleToggleApproverVisibility}
-        onModalClose={handleCloseModal}
-      />
-    </Dropdown>
-  );
+  // eslint-disable-next-line no-unused-vars
+  const handleAOpenApproveOrCloseModal = () => {
+    if (isWithoutChanges) handleCloseModal();
+  };
 
   return (
     <div className={styles._}>
@@ -104,11 +74,21 @@ function ModalForm() {
       />
 
       <div
-        className={cn(styles.modalForm, { [styles.active]: isModalFormActive })}
+        className={cn(styles.modalForm, {
+          [styles.active]: isModalFormActive,
+        })}
       >
         <div className={styles.header}>
           Заявка #{index}
-          {dropdownApproveChangeElement}
+          <Dropdown
+            triggerClassName={styles.button}
+            trigger={
+              <Button icon="xLarge" onClick={handleAOpenApproveOrCloseModal} />
+            }
+            childrenClassName={dropdownCloseApproverStyle._}
+          >
+            <DropdownCloseApprover onModalClose={handleCloseModal} />
+          </Dropdown>
         </div>
         <div className={styles.body}>
           <Input
@@ -129,7 +109,15 @@ function ModalForm() {
             value={STATUSES_NAMES_TRANSLATION[status]}
             readOnly
             label="Статус заказа"
-            postfix={dropdownSelectorElement}
+            postfix={
+              <Dropdown
+                trigger={<Button icon="arrow" />}
+                childrenClassName={dropdownSelectorStyles._}
+                triggerActiveClassName={styles.flipped}
+              >
+                <StatusSelectorByModal />
+              </Dropdown>
+            }
           />
 
           <Input

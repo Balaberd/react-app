@@ -2,6 +2,7 @@ import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTra
 import { changeModalValue } from "features/OrdersList/model/modal/modalSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames";
 import styles from "./StatusSelectorByModal.module.css";
 
 function StatusSelectorByModal({ onDropdownClose }) {
@@ -24,7 +25,7 @@ function StatusSelectorByModal({ onDropdownClose }) {
             value={status}
             checked={modalStatus === status}
             onChange={() => handleChangeModalStatus(status)}
-            className={styles.radio}
+            className={cn(styles.radio, "dropdownCloser")}
             id={status}
             name="radioGroup"
           />

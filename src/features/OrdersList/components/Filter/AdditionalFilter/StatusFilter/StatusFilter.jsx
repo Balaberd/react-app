@@ -17,13 +17,11 @@ function StatusFilter({ choosedStatuses, onChangeChoosedStatus }) {
           .map((status) => STATUSES_NAMES_TRANSLATION[status])
           .join(", ");
 
-  const toggleElement = <Button icon="arrow" />;
-
   const dropdownElement = (
     <Dropdown
-      trigger={toggleElement}
+      trigger={<Button icon="arrow" />}
       childrenClassName={dropdownStyles._}
-      triggerClassNameWithActiveTrigger={styles.flipped}
+      triggerActiveClassName={styles.flipped}
     >
       <StatusesSelector
         choosedStatuses={choosedStatuses}

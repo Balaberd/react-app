@@ -8,7 +8,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./StatusSelector.module.css";
 
-function StatusSelector({ onDropdownClose }) {
+function StatusSelector() {
   const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
 
   const checkedOrders = useSelector(getCheckedOrdersID);
@@ -17,8 +17,7 @@ function StatusSelector({ onDropdownClose }) {
 
   const handleChangeOrdersStatuses = (status) => {
     dispatch(changeOrders({ newStatus: status, checkedOrders }));
-    dispatch(resetCheckedOrders());
-    onDropdownClose();
+    setTimeout(() => dispatch(resetCheckedOrders()), 300);
   };
 
   return (

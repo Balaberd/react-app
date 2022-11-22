@@ -4,11 +4,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import Button from "shared/Button/Button";
 
-function DeletionApprover({ numberOfCheckedOrders, onDropdownClose }) {
+function DeletionApprover({ numberOfCheckedOrders }) {
   const dispatch = useDispatch();
 
   const handleDeleteChoosedOrders = () => {
-    onDropdownClose();
     dispatch(deleteCheckedOrders());
     dispatch(changeCurrentPage(1));
   };
@@ -23,7 +22,7 @@ function DeletionApprover({ numberOfCheckedOrders, onDropdownClose }) {
         size="short"
         theme="primary"
         isFullWidth
-        onClick={onDropdownClose}
+        className="dropdownCloser"
       >
         Отмена
       </Button>

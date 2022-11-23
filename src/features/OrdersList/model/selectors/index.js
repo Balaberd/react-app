@@ -1,11 +1,15 @@
-/* eslint-disable no-continue */
 import sortByKey from "features/OrdersList/lib/sortByKey";
 
-export const getchoosedStatuses = (state) => state.filters.choosedStatuses;
-export const getSearchbarValue = (state) => state.filters.searchbar;
+export const getFilters = (state) => state.filters;
+export const getOrders = (state) => state.orders;
+export const getOrderForm = (state) => state.orderForm;
 export const getCheckedOrdersID = (state) => state.orders.checkedOrdersID;
 export const getCheckedOrdersIDLength = (state) =>
   state.orders.checkedOrdersID.length;
+export const getOrderByID = (id) => (state) =>
+  state.orders.allOrders.filter((order) => order.id === id)[0];
+export const getCurrentPage = (state) => state.filters.currentPage;
+
 export const isAdditionalFiltersActive = (state) => {
   const { minDate, maxDate, choosedStatuses, minSum, maxSum } = state.filters;
   if (
@@ -38,33 +42,23 @@ export const getFilteredOrdersByPageAndAllOrdersLength = (state) => {
 
   const { allOrders } = state.orders;
 
-  const filteredOrders = [];
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < allOrders.length; i++) {
-    if (minDate && new Date(allOrders[i].date) < new Date(minDate)) {
-      continue;
-    } else if (maxDate && new Date(allOrders[i].date) > new Date(maxDate)) {
-      continue;
-    } else if (
-      choosedStatuses.length > 0 &&
-      !choosedStatuses.includes(allOrders[i].status)
-    ) {
-      continue;
-    } else if (minSum && allOrders[i].sum < minSum) {
-      continue;
-    } else if (maxSum && allOrders[i].sum > maxSum) {
-      continue;
-    } else if (searchbar) {
-      if (
+  const filteredOrders = allOrders.filter((order) => {
+    if (
+      (minDate && new Date(order.date) < new Date(minDate)) ||
+      (maxDate && new Date(order.date) > new Date(maxDate)) ||
+      (choosedStatuses.length > 0 && !choosedStatuses.includes(order.status)) ||
+      (minSum && order.sum < minSum) ||
+      (maxSum && order.sum > maxSum) ||
+      (searchbar &&
         !(
-          `${allOrders[i].index}`.includes(searchbar) ||
-          allOrders[i].customerName.includes(searchbar)
-        )
-      )
-        continue;
+          `${order.index}`.includes(searchbar) ||
+          order.customerName.includes(searchbar)
+        ))
+    ) {
+      return false;
     }
-    filteredOrders.push(allOrders[i]);
-  }
+    return true;
+  });
 
   const filteredAndSorted = sortByKey(
     activeSorter,

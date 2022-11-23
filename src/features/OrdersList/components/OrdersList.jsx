@@ -9,8 +9,8 @@ import OrderListTableFooter from "./Table/OrderListTableFooter/OrderListTableFoo
 import OrderListTableHeader from "./Table/OrderListTableHeader/OrderListTableHeader";
 import styles from "./OrdersList.module.css";
 import { toggleOrderCheck } from "../model/orders/ordersSlice";
-import ModalForm from "./Form/ModalForm";
 import { getFilteredOrdersByPageAndAllOrdersLength } from "../model/selectors";
+import OrderForm from "./Form/OrderForm";
 
 function OrdersList() {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function OrdersList() {
           ordersOnPageLength={ordersByPage.length}
         />
       </Table>
-      <ModalForm />
+      <OrderForm />
     </div>
   );
 }

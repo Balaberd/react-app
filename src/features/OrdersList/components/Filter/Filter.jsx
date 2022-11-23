@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   changeCurrentPage,
   getAdditionalFilterValues,
+  resetAllFilters,
 } from "features/OrdersList/model/filters/filtersSlice";
 import { getDateByFilters } from "features/OrdersList/lib/date";
 import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
@@ -60,15 +61,18 @@ function Filter() {
     }
     return filterSetter("");
   };
+
+  const dispatch = useDispatch();
   const handleResetAdditionalFilters = () => {
     setMinDate({ value: "", isValid: true });
     setMaxDate({ value: "", isValid: true });
     setChoosedStatuses([]);
     setMinSum("");
     setMaxSum("");
+    dispatch(checkOrders([]));
+    dispatch(resetAllFilters());
   };
 
-  const dispatch = useDispatch();
   const applyAdditionalFilter = () => {
     const formatedMinDate = getDateByFilters(minDate.value);
     const formatedMaxDate = getDateByFilters(maxDate.value, true);

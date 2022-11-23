@@ -3,15 +3,11 @@ import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Icon from "shared/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
+import { changeSearchbar } from "features/OrdersList/model/filters/filtersSlice";
 import {
-  changeSearchbar,
-  resetAllFilters,
-} from "features/OrdersList/model/filters/filtersSlice";
-import {
-  getSearchbarValue,
+  getFilters,
   isAdditionalFiltersActive,
 } from "features/OrdersList/model/selectors";
-import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import cn from "classnames";
 import styles from "./MainFilter.module.css";
 
@@ -22,7 +18,7 @@ function MainFilter({
 }) {
   const dispatch = useDispatch();
 
-  const searchbarValue = useSelector(getSearchbarValue);
+  const { searchbar: searchbarValue } = useSelector(getFilters);
 
   const handleChangeSearchbar = ({ target: { value } }) => {
     dispatch(changeSearchbar(value));
@@ -30,12 +26,6 @@ function MainFilter({
 
   const handleResetValue = () => {
     dispatch(changeSearchbar(""));
-  };
-
-  const handleResetAllFilters = () => {
-    dispatch(checkOrders([]));
-    dispatch(resetAllFilters());
-    onResetAdditionalFilters();
   };
 
   const isActive = useSelector(isAdditionalFiltersActive);
@@ -60,7 +50,7 @@ function MainFilter({
           Фильтры
         </Button>
         <Button
-          onClick={handleResetAllFilters}
+          onClick={onResetAdditionalFilters}
           className={cn(styles.resetFilters, { [styles.inactive]: isActive })}
         >
           Сбросить фильтры

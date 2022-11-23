@@ -12,12 +12,15 @@ import {
   changeSorterDirection,
 } from "features/OrdersList/model/filters/filtersSlice";
 import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
-import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
+import {
+  getCheckedOrdersID,
+  getFilters,
+} from "features/OrdersList/model/selectors";
 import styles from "./OrderListTableHeader.module.css";
 import rowStyles from "../RowMarkup.module.css";
 
 function OrderListTableHeader({ allOrdersOnPage }) {
-  const { activeSorter, isAscending } = useSelector((state) => state.filters);
+  const { activeSorter, isAscending } = useSelector(getFilters);
 
   const checkedOrdersID = useSelector(getCheckedOrdersID);
 

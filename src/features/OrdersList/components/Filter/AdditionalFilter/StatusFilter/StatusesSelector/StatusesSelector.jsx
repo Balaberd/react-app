@@ -1,4 +1,4 @@
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
 import React from "react";
 import Checkbox from "shared/Chechbox/Checkbox";
 import styles from "./StatusesSelector.module.css";

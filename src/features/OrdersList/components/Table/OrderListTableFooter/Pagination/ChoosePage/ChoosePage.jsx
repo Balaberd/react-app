@@ -1,5 +1,6 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
 import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { getFilters } from "features/OrdersList/model/selectors";
 import { React, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "shared/Input/Input";
@@ -19,7 +20,7 @@ function ChoosePage({ maxPage, onDropdownClose }) {
     setInputValue("");
   };
 
-  const { currentPage } = useSelector((state) => state.filters);
+  const { currentPage } = useSelector(getFilters);
 
   const dispatch = useDispatch();
   const selectPage = (e, pageNumber) => {

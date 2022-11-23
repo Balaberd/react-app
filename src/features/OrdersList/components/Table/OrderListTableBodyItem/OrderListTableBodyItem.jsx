@@ -7,8 +7,11 @@ import TableCell from "shared/Table/TableCell/TableCell";
 import Checkbox from "shared/Chechbox/Checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormatedDate } from "features/OrdersList/lib/date";
-import { openModal } from "features/OrdersList/model/modal/modalSlice";
-import { getCheckedOrdersID } from "features/OrdersList/model/selectors";
+import { openModal } from "features/OrdersList/model/orderForm/orderFormSlice";
+import {
+  getCheckedOrdersID,
+  getOrderForm,
+} from "features/OrdersList/model/selectors";
 import StatusCell from "./StatusCell/StatusCell";
 import rowStyles from "../RowMarkup.module.css";
 import styles from "./OrderListTableBodyItem.module.css";
@@ -24,7 +27,7 @@ function OrderListTableBodyItem({
   customerName,
 }) {
   const RUB_SYMBOL = <span>&#8381;</span>;
-  const checkedModalFormOrderId = useSelector((state) => state.modal.orderId);
+  const { orderId: checkedOrderFormId } = useSelector(getOrderForm);
   const checkedOrders = useSelector(getCheckedOrdersID);
 
   const dispatch = useDispatch();
@@ -36,7 +39,7 @@ function OrderListTableBodyItem({
   return (
     <TableRow
       className={cn(styles.bodyRow, {
-        [styles.checked]: isChecked || checkedModalFormOrderId === id,
+        [styles.checked]: isChecked || checkedOrderFormId === id,
       })}
     >
       <TableCell className={rowStyles.checkbox}>

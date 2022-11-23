@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "shared/Button/Button";
 
-function CloseModalConfirmation({ onModalClose }) {
+function ClosingFormConfirmation({ onModalClose }) {
   return (
     <>
       Есть несохраненные изменения
@@ -20,4 +20,4 @@ function CloseModalConfirmation({ onModalClose }) {
   );
 }
 
-export default CloseModalConfirmation;
+export default ClosingFormConfirmation;

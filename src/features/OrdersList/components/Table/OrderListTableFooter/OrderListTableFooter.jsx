@@ -15,38 +15,37 @@ function OrderListTableFooter({ filteredOrdersLength, ordersOnPageLength }) {
 
   return (
     <TableFooter className={styles._}>
-      <div className={styles.block}>
+      <div
+        className={cn(styles.block, {
+          [styles.unvisible]: numberOfCheckedOrders === 0,
+        })}
+      >
         <span>Выбрано записей: {numberOfCheckedOrders}</span>
-        <div
-          className={cn(styles.block, {
-            [styles.unvisible]: numberOfCheckedOrders === 0,
-          })}
-        >
-          <Dropdown
-            trigger={
-              <Button icon="pencil" theme="primary" size="short">
-                Изменить статус
-              </Button>
-            }
-            childrenClassName={styles.statusSelector}
-          >
-            <StatusSelector />
-          </Dropdown>
 
-          <Dropdown
-            trigger={
-              <Button icon="bin" theme="warning" size="short">
-                Удалить
-              </Button>
-            }
-            childrenClassName={styles.deletionApprover}
-          >
-            <DeletionApprover
-              numberOfCheckedOrders={numberOfCheckedOrders}
-              ordersOnPageLength={ordersOnPageLength}
-            />
-          </Dropdown>
-        </div>
+        <Dropdown
+          trigger={
+            <Button icon="pencil" theme="primary" size="short">
+              Изменить статус
+            </Button>
+          }
+          childrenClassName={styles.statusSelector}
+        >
+          <StatusSelector />
+        </Dropdown>
+
+        <Dropdown
+          trigger={
+            <Button icon="bin" theme="warning" size="short">
+              Удалить
+            </Button>
+          }
+          childrenClassName={styles.deletionApprover}
+        >
+          <DeletionApprover
+            numberOfCheckedOrders={numberOfCheckedOrders}
+            ordersOnPageLength={ordersOnPageLength}
+          />
+        </Dropdown>
       </div>
 
       <div className={styles.block}>

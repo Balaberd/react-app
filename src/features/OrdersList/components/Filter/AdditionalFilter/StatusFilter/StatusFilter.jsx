@@ -2,7 +2,7 @@ import React from "react";
 import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
 import StatusesSelector from "./StatusesSelector/StatusesSelector";
 import styles from "./StatusFilter.module.css";
 import dropdownStyles from "./StatusesSelector/StatusesSelector.module.css";

@@ -1,8 +1,6 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-  isModalFormActive: false,
-
   orderId: "",
   index: "",
   customerName: "",
@@ -11,18 +9,15 @@ const initialState = {
 
   confirmationСodeValue: "",
   confirmationСode: "123",
-
-  haveErrorWhileSaving: false,
 };
 
-const modalSlice = createSlice({
-  name: "modalForm",
+const orderForm = createSlice({
+  name: "orderForm",
   initialState,
   reducers: {
     openModal(state, action) {
       return {
         ...state,
-        isModalFormActive: true,
         customerName: action.payload.customerName,
         status: action.payload.status,
         orderId: action.payload.id,
@@ -36,16 +31,11 @@ const modalSlice = createSlice({
     changeModalValue(state, action) {
       return {
         ...state,
-        haveErrorWhileSaving: false,
         [action.payload.valueName]: action.payload.newValue,
       };
-    },
-    changeErrorStatus(state) {
-      return { ...state, haveErrorWhileSaving: true };
     },
   },
 });
 
-export const { openModal, closeModal, changeModalValue, changeErrorStatus } =
-  modalSlice.actions;
-export default modalSlice.reducer;
+export const { openModal, closeModal, changeModalValue } = orderForm.actions;
+export default orderForm.reducer;

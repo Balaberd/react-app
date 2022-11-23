@@ -27,7 +27,7 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
-.modalForm {
+.form {
   visibility: visible;
 
   position: absolute;
@@ -42,8 +42,6 @@
   overflow: hidden;
 
   background-color: var(--background-color);
-
-  transition: 0.5s;
 }
 
 .active {
@@ -118,4 +116,10 @@
 
 .flipped {
   transform: rotateX(180deg);
+}
+
+.errorsText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

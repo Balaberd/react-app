@@ -1,13 +1,12 @@
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
-import { changeModalValue } from "features/OrdersList/model/modal/modalSlice";
+import { changeModalValue } from "features/OrdersList/model/orderForm/orderFormSlice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import cn from "classnames";
-import styles from "./StatusSelectorByModal.module.css";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
+import styles from "./StatusSelectorByForm.module.css";
 
-function StatusSelectorByModal() {
+function StatusSelectorByForm({ orderStatus }) {
   const statuses = Object.keys(STATUSES_NAMES_TRANSLATION);
-  const modalStatus = useSelector((state) => state.modal.status);
 
   const dispatch = useDispatch();
   const handleChangeModalStatus = (newStatus) => {
@@ -22,7 +21,7 @@ function StatusSelectorByModal() {
           <input
             type="radio"
             value={status}
-            checked={modalStatus === status}
+            checked={orderStatus === status}
             onChange={() => handleChangeModalStatus(status)}
             className={cn(styles.radio, "dropdownCloser")}
             id={status}
@@ -37,4 +36,4 @@ function StatusSelectorByModal() {
   );
 }
 
-export default StatusSelectorByModal;
+export default StatusSelectorByForm;

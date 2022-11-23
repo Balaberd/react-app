@@ -1,5 +1,6 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
 import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
+import { getFilters } from "features/OrdersList/model/selectors";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
@@ -50,7 +51,7 @@ function Pagination({ ordersLength }) {
   const handleToggleDropdown = () => {
     setExternalDropdownSetter(!externalDropdownSetter);
   };
-  const { pageLimit, currentPage } = useSelector((state) => state.filters);
+  const { pageLimit, currentPage } = useSelector(getFilters);
   const maxPage = Math.ceil(ordersLength / pageLimit);
 
   const dropdownTrigger = <Button>#</Button>;
@@ -74,8 +75,6 @@ function Pagination({ ordersLength }) {
     <div className={styles._}>
       <div className={styles.wrapper}>{buttons}</div>
       <Dropdown
-        externalVisibilityValue={externalDropdownSetter}
-        externalVisibilitySetter={handleToggleDropdown}
         trigger={dropdownTrigger}
         childrenClassName={styles.dropdown}
         dropdownVisibility={externalDropdownSetter}

@@ -1,4 +1,4 @@
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
 import {
   changeStatusOrders,
   checkOrders,

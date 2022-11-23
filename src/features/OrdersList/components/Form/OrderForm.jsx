@@ -2,29 +2,34 @@ import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
 import Input from "shared/Input/Input";
 import cn from "classnames";
-import { React } from "react";
+import { React, useState } from "react";
 import {
-  changeErrorStatus,
   changeModalValue,
   closeModal,
-} from "features/OrdersList/model/modal/modalSlice";
+} from "features/OrdersList/model/orderForm/orderFormSlice";
 import { useDispatch, useSelector } from "react-redux";
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
 import { changeOrder } from "features/OrdersList/model/orders/ordersSlice";
 import { getFormatedDate } from "features/OrdersList/lib/date";
-import styles from "./ModalForm.module.css";
+import {
+  getOrderByID,
+  getOrderForm,
+} from "features/OrdersList/model/selectors";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
+import styles from "./OrderForm.module.css";
 import OrderDetail from "./OrderDetail/OrderDetail";
-import StatusSelectorByModal from "./StatusSelectorByModal/StatusSelectorByModal";
-import dropdownSelectorStyles from "./StatusSelectorByModal/StatusSelectorByModal.module.css";
-import CloseModalConfirmation from "./CloseModalConfirmation/CloseModalConfirmation";
-import CloseModalConfirmationStyle from "./CloseModalConfirmation/CloseModalConfirmation.module.css";
+import dropdownSelectorStyles from "./StatusSelectorByForm/StatusSelectorByForm.module.css";
+import closingFormConfirmationStyle from "./ClosingFormConfirmation/ClosingFormConfirmation.module.css";
+import ClosingFormConfirmation from "./ClosingFormConfirmation/ClosingFormConfirmation";
+import StatusSelectorByForm from "./StatusSelectorByForm/StatusSelectorByForm";
 
-const getCurrentOrderByID = (id) => (state) =>
-  state.orders.allOrders.filter((order) => order.id === id)[0];
+const initialErrorState = {
+  password: false,
+  name: false,
+};
 
-function ModalForm() {
+function OrderForm() {
+  const [errorInForm, setErrorInForm] = useState(initialErrorState);
   const {
-    isModalFormActive,
     orderId,
     index,
     date,
@@ -32,8 +37,9 @@ function ModalForm() {
     status,
     confirmationСodeValue,
     confirmationСode,
-    haveErrorWhileSaving,
-  } = useSelector((state) => state.modal);
+  } = useSelector(getOrderForm);
+
+  const isFormOpen = !!orderId;
 
   const dispatch = useDispatch();
   const createHandleValueChanger =
@@ -46,39 +52,46 @@ function ModalForm() {
   };
 
   const handleCloseModal = () => {
+    setErrorInForm(initialErrorState);
     dispatch(closeModal());
   };
 
-  const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
-  const handleChangeOrder = () => {
-    if (isEnteredCodeCorrect && customerName) {
-      dispatch(changeOrder({ id: orderId, customerName, status }));
-      handleCloseModal();
-    } else {
-      dispatch(changeErrorStatus());
-    }
+  const originalOrder = useSelector(getOrderByID(orderId));
+  const hasChanges = !(
+    originalOrder?.customerName === customerName &&
+    originalOrder?.status === status
+  );
+
+  const handleAnOpenApproverOrCloseModal = () => {
+    if (!hasChanges) handleCloseModal();
   };
 
-  const originalOrder = useSelector(getCurrentOrderByID(orderId));
-  const isWithoutChanges =
-    originalOrder?.customerName === customerName &&
-    originalOrder?.status === status;
+  const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
 
-  const handleAOpenApproverOrCloseModal = () => {
-    if (isWithoutChanges) handleCloseModal();
+  const handleChangeOrder = () => {
+    if (!isEnteredCodeCorrect || !customerName) {
+      setErrorInForm({
+        password: !isEnteredCodeCorrect,
+        name: !customerName,
+      });
+    } else {
+      dispatch(changeOrder({ id: orderId, customerName, status }));
+      handleCloseModal();
+      setErrorInForm(initialErrorState);
+    }
   };
 
   return (
     <div className={styles._}>
       <div
         className={cn(styles.modalBackground, {
-          [styles.active]: isModalFormActive,
+          [styles.active]: isFormOpen,
         })}
       />
 
       <div
-        className={cn(styles.modalForm, {
-          [styles.active]: isModalFormActive,
+        className={cn(styles.form, {
+          [styles.active]: isFormOpen,
         })}
       >
         <div className={styles.header}>
@@ -86,11 +99,14 @@ function ModalForm() {
           <Dropdown
             triggerClassName={styles.button}
             trigger={
-              <Button icon="xLarge" onClick={handleAOpenApproverOrCloseModal} />
+              <Button
+                icon="xLarge"
+                onClick={handleAnOpenApproverOrCloseModal}
+              />
             }
-            childrenClassName={CloseModalConfirmationStyle._}
+            childrenClassName={closingFormConfirmationStyle._}
           >
-            <CloseModalConfirmation onModalClose={handleCloseModal} />
+            <ClosingFormConfirmation onModalClose={handleCloseModal} />
           </Dropdown>
         </div>
         <div className={styles.body}>
@@ -101,7 +117,7 @@ function ModalForm() {
           />
           <Input
             value={customerName}
-            isIncorrect={customerName !== null && customerName.length === 0}
+            isIncorrect={errorInForm.name}
             onChange={createHandleValueChanger("customerName")}
             onReset={createHandleValueReset("customerName")}
             label="ФИО покупателя"
@@ -119,7 +135,7 @@ function ModalForm() {
                 childrenClassName={dropdownSelectorStyles._}
                 triggerActiveClassName={styles.flipped}
               >
-                <StatusSelectorByModal />
+                <StatusSelectorByForm orderStatus={status} />
               </Dropdown>
             }
           />
@@ -129,12 +145,17 @@ function ModalForm() {
             value={confirmationСodeValue}
             onChange={createHandleValueChanger("confirmationСodeValue")}
             onReset={createHandleValueReset("confirmationСodeValue")}
-            isIncorrect={haveErrorWhileSaving}
+            isIncorrect={errorInForm.password}
           />
         </div>
 
         <div className={styles.footer}>
-          {haveErrorWhileSaving && "Ошибка или индикатор загрузки"}
+          <div className={styles.errorsText}>
+            {errorInForm.name && (
+              <span>Поле с именем не может быть пустым</span>
+            )}
+            {errorInForm.password && <span>Неверный пароль</span>}
+          </div>
           <Button icon="check" theme="primary" onClick={handleChangeOrder}>
             Сохранить
           </Button>
@@ -144,4 +165,4 @@ function ModalForm() {
   );
 }
 
-export default ModalForm;
+export default OrderForm;

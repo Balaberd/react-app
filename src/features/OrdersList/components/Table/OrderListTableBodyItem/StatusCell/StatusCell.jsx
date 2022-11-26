@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import Icon from "shared/Icon/Icon";
-import STATUSES_NAMES_TRANSLATION from "features/OrdersList/lib/statusesNamesTranslation";
+import { STATUSES_NAMES_TRANSLATION } from "features/OrdersList/const";
 import styles from "./StatusCell.module.css";
 
 const ICON_SETTINGS_MAP = {
@@ -30,7 +30,6 @@ const ICON_SETTINGS_MAP = {
     iconColor: "black",
   },
 };
-
 function StatusCell({ status }) {
   const componentStyles = cn(styles._, {
     [styles.done]: status === "done",

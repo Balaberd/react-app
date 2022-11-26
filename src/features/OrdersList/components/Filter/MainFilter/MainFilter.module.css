@@ -13,3 +13,13 @@
   align-items: center;
   gap: 1rem;
 }
+
+.resetFilters {
+  transition: 0.75s;
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0;
+  visibility: hidden;
+}

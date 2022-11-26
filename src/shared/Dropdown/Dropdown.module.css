@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.overlay {
+.children {
   position: absolute;
 
   z-index: 2;

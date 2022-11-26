@@ -1,20 +1,24 @@
+import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
+import { deleteCheckedOrders } from "features/OrdersList/model/orders/ordersSlice";
 import {
-  changeCurrentPage,
-  resetAllCheckOrders,
-} from "features/OrdersList/model/filters/filtersSlice";
-import { deleteOrders } from "features/OrdersList/model/orders/ordersSlice";
+  getCheckedOrdersIDLength,
+  getCurrentPage,
+} from "features/OrdersList/model/selectors";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 
-function DeletionApprover({ numberOfCheckedOrders }) {
-  const checkedOrders = useSelector((state) => state.filters.checkedOrdersId);
+function DeletionApprover({ numberOfCheckedOrders, ordersOnPageLength }) {
   const dispatch = useDispatch();
+  const currentPage = useSelector(getCurrentPage);
+  const checkedOrdersLength = useSelector(getCheckedOrdersIDLength);
+  const ordersLengthAfterDeletion = ordersOnPageLength - checkedOrdersLength;
 
   const handleDeleteChoosedOrders = () => {
-    dispatch(deleteOrders(checkedOrders));
-    dispatch(resetAllCheckOrders());
-    dispatch(changeCurrentPage(1));
+    dispatch(deleteCheckedOrders());
+    if (ordersLengthAfterDeletion === 0 && currentPage !== 1) {
+      dispatch(changeCurrentPage(currentPage - 1));
+    }
   };
 
   return (
@@ -23,7 +27,12 @@ function DeletionApprover({ numberOfCheckedOrders }) {
       <Button size="short" isFullWidth onClick={handleDeleteChoosedOrders}>
         Удалить
       </Button>
-      <Button size="short" theme="primary" isFullWidth>
+      <Button
+        size="short"
+        theme="primary"
+        isFullWidth
+        className="dropdownCloser"
+      >
         Отмена
       </Button>
     </>

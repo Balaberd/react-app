@@ -1,4 +1,5 @@
-const STATUSES_NAMES_TRANSLATION = {
+// eslint-disable-next-line import/prefer-default-export
+export const STATUSES_NAMES_TRANSLATION = {
   new: "Новый",
   calculating: "Расчет",
   confirm: "Подтвержден",
@@ -6,5 +7,3 @@ const STATUSES_NAMES_TRANSLATION = {
   done: "Выполнен",
   canceled: "Отменен",
 };
-
-export default STATUSES_NAMES_TRANSLATION;

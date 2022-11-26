@@ -1,7 +1,30 @@
-.pageWrapper {
+._ {
   padding: 2rem 3rem 0 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: calc(100vh - 2rem);
+
+  overflow: hidden;
+  position: relative;
+}
+
+.modalBackground {
+  width: 100vw;
+  height: 100vh;
+
+  top: 0;
+  left: 0;
+
+  position: fixed;
+  z-index: 2;
+
+  transition: 0.5s;
+
+  visibility: hidden;
+}
+
+.modalBackground.active {
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.15);
 }

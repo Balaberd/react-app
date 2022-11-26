@@ -1,17 +1,36 @@
+import ordersMock from "features/OrdersList/lib/ordersMock";
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-  allOrders: [],
+  allOrders: ordersMock,
+  checkedOrdersID: [],
 };
 
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    getOrders(state, action) {
-      return { ...state, allOrders: action.payload };
+    toggleOrderCheck(state, action) {
+      if (state.checkedOrdersID.includes(action.payload)) {
+        return {
+          ...state,
+          checkedOrdersID: state.checkedOrdersID.filter(
+            (id) => id !== action.payload
+          ),
+        };
+      }
+      return {
+        ...state,
+        checkedOrdersID: [...state.checkedOrdersID, action.payload],
+      };
     },
-    changeOrders(state, action) {
+
+    checkOrders(state, action) {
+      return { ...state, checkedOrdersID: action.payload };
+    },
+
+    changeStatusOrders(state, action) {
       const newOrders = state.allOrders.map((order) =>
         action.payload.checkedOrders.includes(order.id)
           ? { ...order, status: action.payload.newStatus }
@@ -19,14 +38,35 @@ const ordersSlice = createSlice({
       );
       return { ...state, allOrders: newOrders };
     },
-    deleteOrders(state, action) {
-      const newOrders = state.allOrders.filter(
-        (order) => !action.payload.includes(order.id)
+    changeOrder(state, action) {
+      const newOrders = state.allOrders.map((order) =>
+        order.id === action.payload.id
+          ? {
+              ...order,
+              status: action.payload.status,
+              customerName: action.payload.customerName,
+            }
+          : order
       );
       return { ...state, allOrders: newOrders };
+    },
+    deleteCheckedOrders(state) {
+      return {
+        ...state,
+        allOrders: state.allOrders.filter(
+          (order) => !state.checkedOrdersID.includes(order.id)
+        ),
+        checkedOrdersID: [],
+      };
     },
   },
 });
 
-export const { getOrders, changeOrders, deleteOrders } = ordersSlice.actions;
+export const {
+  changeStatusOrders,
+  deleteCheckedOrders,
+  changeOrder,
+  toggleOrderCheck,
+  checkOrders,
+} = ordersSlice.actions;
 export default ordersSlice.reducer;

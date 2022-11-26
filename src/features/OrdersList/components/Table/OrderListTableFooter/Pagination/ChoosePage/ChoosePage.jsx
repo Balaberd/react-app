@@ -7,7 +7,7 @@ import Input from "shared/Input/Input";
 
 const ENTER_KEY_CODE = 13;
 
-function ChoosePage({ maxPage, onDropdownClose }) {
+function ChoosePage({ maxPage }) {
   const [inputValue, setInputValue] = useState("");
 
   const handleChangeValue = ({ target: { value } }) => {
@@ -32,7 +32,6 @@ function ChoosePage({ maxPage, onDropdownClose }) {
     ) {
       dispatch(checkOrders([]));
       dispatch(changeCurrentPage(Number(pageNumber)));
-      onDropdownClose();
     }
   };
 
@@ -40,6 +39,7 @@ function ChoosePage({ maxPage, onDropdownClose }) {
     <>
       Номер страницы
       <Input
+        className="dropdownCloser"
         value={inputValue}
         isIncorrect={inputValue > maxPage}
         onChange={handleChangeValue}

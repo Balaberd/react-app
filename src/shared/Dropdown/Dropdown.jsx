@@ -57,7 +57,7 @@ function Dropdown({
       return;
     }
     const classes = event.target.className;
-    if (classes.includes("dropdownCloser")) {
+    if (typeof classes === "string" && classes.includes("dropdownCloser")) {
       setTimeout(() => setIsOpen(false), 200);
     }
   };

@@ -3,7 +3,10 @@ import Input from "shared/Input/Input";
 import Button from "shared/Button/Button";
 import Icon from "shared/Icon/Icon";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSearchbar } from "features/OrdersList/model/filters/filtersSlice";
+import {
+  changeCurrentPage,
+  changeSearchbar,
+} from "features/OrdersList/model/filters/filtersSlice";
 import {
   getFilters,
   isAdditionalFiltersActive,
@@ -22,6 +25,7 @@ function MainFilter({
 
   const handleChangeSearchbar = ({ target: { value } }) => {
     dispatch(changeSearchbar(value));
+    dispatch(changeCurrentPage(1));
   };
 
   const handleResetValue = () => {

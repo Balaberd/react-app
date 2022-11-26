@@ -1,7 +1,7 @@
 import { changeCurrentPage } from "features/OrdersList/model/filters/filtersSlice";
 import { checkOrders } from "features/OrdersList/model/orders/ordersSlice";
 import { getFilters } from "features/OrdersList/model/selectors";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "shared/Button/Button";
 import Dropdown from "shared/Dropdown/Dropdown";
@@ -28,8 +28,7 @@ const createPaginationElement = (
   buttonCallback
 ) => {
   const elements = [];
-  // eslint-disable-next-line no-plusplus
-  for (let i = 1; i <= maxPage; i++) {
+  for (let i = 1; i <= maxPage; i += 1) {
     if (
       i === 1 ||
       Math.abs(i - currentPage) === 1 ||
@@ -47,10 +46,6 @@ const createPaginationElement = (
 };
 
 function Pagination({ ordersLength }) {
-  const [externalDropdownSetter, setExternalDropdownSetter] = useState(false);
-  const handleToggleDropdown = () => {
-    setExternalDropdownSetter(!externalDropdownSetter);
-  };
   const { pageLimit, currentPage } = useSelector(getFilters);
   const maxPage = Math.ceil(ordersLength / pageLimit);
 
@@ -74,15 +69,11 @@ function Pagination({ ordersLength }) {
   return (
     <div className={styles._}>
       <div className={styles.wrapper}>{buttons}</div>
-      <Dropdown
-        trigger={dropdownTrigger}
-        childrenClassName={styles.dropdown}
-        dropdownVisibility={externalDropdownSetter}
-      >
+      <Dropdown trigger={dropdownTrigger} childrenClassName={styles.dropdown}>
         <ChoosePage
           ordersLength={ordersLength}
           maxPage={maxPage}
-          onDropdownClose={handleToggleDropdown}
+          // onDropdownClose={handleToggleDropdown}
         />
       </Dropdown>
     </div>

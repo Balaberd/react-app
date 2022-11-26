@@ -41,6 +41,8 @@
   height: 100%;
   overflow: hidden;
 
+  transition: 3s;
+
   background-color: var(--background-color);
 }
 
@@ -122,4 +124,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.unvisible {
+  display: none;
 }

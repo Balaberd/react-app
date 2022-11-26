@@ -11,8 +11,10 @@ export const getOrderByID = (id) => (state) =>
 export const getCurrentPage = (state) => state.filters.currentPage;
 
 export const isAdditionalFiltersActive = (state) => {
-  const { minDate, maxDate, choosedStatuses, minSum, maxSum } = state.filters;
+  const { searchbar, minDate, maxDate, choosedStatuses, minSum, maxSum } =
+    state.filters;
   if (
+    !!searchbar ||
     !!minDate ||
     minDate === "Invalid Date" ||
     !!maxDate ||

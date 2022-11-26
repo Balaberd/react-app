@@ -52,8 +52,10 @@ function OrderForm() {
   };
 
   const handleCloseModal = () => {
-    setErrorInForm(initialErrorState);
     dispatch(closeModal());
+    setTimeout(() => {
+      setErrorInForm(initialErrorState);
+    }, 500);
   };
 
   const originalOrder = useSelector(getOrderByID(orderId));
@@ -63,7 +65,9 @@ function OrderForm() {
   );
 
   const handleAnOpenApproverOrCloseModal = () => {
-    if (!hasChanges) handleCloseModal();
+    if (!hasChanges) {
+      handleCloseModal();
+    }
   };
 
   const isEnteredCodeCorrect = confirmationСodeValue === confirmationСode;
@@ -80,7 +84,6 @@ function OrderForm() {
       setErrorInForm(initialErrorState);
     }
   };
-
   return (
     <div className={styles._}>
       <div
@@ -104,7 +107,9 @@ function OrderForm() {
                 onClick={handleAnOpenApproverOrCloseModal}
               />
             }
-            childrenClassName={closingFormConfirmationStyle._}
+            childrenClassName={cn(closingFormConfirmationStyle._, {
+              [styles.unvisible]: !isFormOpen,
+            })}
           >
             <ClosingFormConfirmation onModalClose={handleCloseModal} />
           </Dropdown>

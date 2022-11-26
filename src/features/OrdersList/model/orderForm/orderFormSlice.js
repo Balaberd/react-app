@@ -25,8 +25,11 @@ const orderForm = createSlice({
         date: action.payload.date,
       };
     },
-    closeModal() {
-      return { ...initialState };
+    closeModal(state) {
+      return { ...state, orderId: "", confirmationСodeValue: "" };
+    },
+    resetForm() {
+      return initialState;
     },
     changeModalValue(state, action) {
       return {
@@ -37,5 +40,6 @@ const orderForm = createSlice({
   },
 });
 
-export const { openModal, closeModal, changeModalValue } = orderForm.actions;
+export const { openModal, closeModal, changeModalValue, resetForm } =
+  orderForm.actions;
 export default orderForm.reducer;
